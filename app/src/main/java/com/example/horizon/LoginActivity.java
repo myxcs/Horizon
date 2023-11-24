@@ -1,5 +1,6 @@
 package com.example.horizon;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
                 String email = loginEmail.getText().toString();
                 String pass = loginPassword.getText().toString();
 
-                if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email.matches()) {
+                if(!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     if(!pass.isEmpty()){
                         auth.signInWithEmailAndPassword(email,pass)
                                 .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
@@ -55,13 +57,29 @@ public class LoginActivity extends AppCompatActivity {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại" +e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show();
                                     }
-                                })
+                                });
 
                     }
+                    else {
+                        loginPassword.setError("Vui lòng nhập lại mật khẩu");
+                    }
+                } else if (email.isEmpty()){
+                        loginEmail.setError("Vui lòng nhập email");
+                    }
+                    else {
+                        loginEmail.setError("Vui lòng điền đầy đủ email");
+                    }
                 }
-            }
+
         });
+
+                signupRedirectText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                    }
+                });
     }
 }

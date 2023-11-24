@@ -43,14 +43,6 @@
             android:maxLines="1"
             android:inputType="textPassword"/>
     </com.google.android.material.textfield.TextInputLayout>
-    <CheckBox
-        android:layout_gravity="center_horizontal"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:text="Lưu mật khẩu"
-        android:id="@+id/chkRememberPass"
-        android:layout_marginBottom="20dp"
-        />
 
 
     <Button
