@@ -25,7 +25,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:id="@+id/edUserName"
+            android:id="@+id/login_email"
             android:hint="Email"/>
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
@@ -38,7 +38,7 @@
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:id="@+id/edPassWord"
+            android:id="@+id/login_password"
             android:hint="Mật khẩu"
             android:maxLines="1"
             android:inputType="textPassword"/>
@@ -58,11 +58,11 @@
         android:layout_height="wrap_content"
         android:layout_width="250dp"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/btnLogin"
+        android:id="@+id/login_button"
         android:text="Đăng nhập"/>
 
     <TextView
-        android:id="@+id/btnSignup"
+        android:id="@+id/signup_re_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chưa có tài khoản? Đăng kí ngay!"
