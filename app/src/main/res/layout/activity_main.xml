@@ -6,25 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:layout_gravity="center_horizontal"
     android:background="@drawable/backgroud"
     tools:context=".MainActivity">
-<ImageView
-    android:layout_width="250dp"
-    android:layout_height="250dp"
-    android:src="@drawable/logo"
-    android:layout_gravity="center"
+    <FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_weight="1"
+    android:id="@+id/frameLayout"/>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:background="#03A9F4"
+        android:id="@+id/bottom_nav_menu"
+        app:menu="@menu/bottom_nav_menu"
+        android:layout_width="match_parent"
+        app:itemPaddingBottom="10dp"
+        android:layout_height="60dp"/>
 
-    ></ImageView>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Conquer new heights with Horizon"
-        android:textSize="20dp"
-        android:textStyle="italic"
 
-        android:textColor="@color/button">
-    </TextView>
 
 
 </LinearLayout>
