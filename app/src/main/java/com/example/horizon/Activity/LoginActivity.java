@@ -24,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity {
 
     private FirebaseAuth auth;
+    public static final String SHARED_PREFS = "sharedPrefs";
     private EditText loginEmail, loginPassword;
 
     private CheckBox rememberMe;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         auth = FirebaseAuth.getInstance();
+
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);
         rememberMe = findViewById(R.id.checkbox);

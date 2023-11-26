@@ -20,18 +20,23 @@ public class ProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_profile);
+        setContentView(R.layout.activity_profile);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        logout = findViewById(R.id.button_logout);
+     //  logout = findViewById(R.id.button_logout);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SharedPreferences sharedPreferences = getSharedPreferences("checkbox",MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("remember", "false");
-                editor.apply();
-                finish();
+
+
+                Toast.makeText(getApplicationContext(), "Đăng xuất thành công", Toast.LENGTH_SHORT).show();
+
+//                SharedPreferences sharedPreferences = getSharedPreferences("checkbox",MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.putString("remember", "false");
+//                editor.apply();
+//                finish();
             }
         });
     }
