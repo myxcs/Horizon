@@ -6,21 +6,13 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.example.horizon.Adapters.SliderAdapters;
 import com.example.horizon.Domian.SliderItems;
-import com.example.horizon.Fragment.HomeFragment;
-import com.example.horizon.Fragment.NotificationFragment;
-import com.example.horizon.Fragment.ProfileFragment;
 import com.example.horizon.R;
-import com.example.horizon.databinding.ActivityMainBinding;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,9 +60,9 @@ banner();
 
     private void banner() {
         List<SliderItems> sliderItems = new ArrayList<>();
-        sliderItems.add(new SliderItems(R.drawable.imgslider1));
-        sliderItems.add(new SliderItems(R.drawable.imgslider2));
-        sliderItems.add(new SliderItems(R.drawable.imgslider3));
+        sliderItems.add(new SliderItems(R.drawable.img_slider1));
+        sliderItems.add(new SliderItems(R.drawable.img_slider2));
+        sliderItems.add(new SliderItems(R.drawable.img_slider3));
 
         viewPager2.setAdapter(new SliderAdapters(sliderItems, viewPager2));
         viewPager2.setClipToPadding(false);
