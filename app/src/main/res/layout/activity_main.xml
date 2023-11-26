@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/backgroud"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".Activity.MainActivity">
 
 <!--    <FrameLayout-->
@@ -66,8 +68,8 @@
                     android:id="@+id/viewpages"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:paddingStart="50dp"
+                    android:paddingEnd="50dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Kho games mới nhất"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -117,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Duyệt theo thể loại"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -153,7 +155,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:text="Sắp ra mắt"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
