@@ -7,13 +7,13 @@
     tools:context=".Fragment.NotificationFragment">
 
 
-    <TextView
-        android:id="@+id/textnof"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Notification"
-        android:textSize="30dp"
+  <Button
+      android:id="@+id/clickme"
+      android:layout_margin="10dp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Logout">
 
-        ></TextView>
+  </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
