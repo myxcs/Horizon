@@ -11,6 +11,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -24,7 +25,12 @@ import com.example.horizon.Adapters.GamesListAdapter;
 import com.example.horizon.Adapters.SliderAdapters;
 import com.example.horizon.Domian.ListGame;
 import com.example.horizon.Domian.SliderItems;
+import com.example.horizon.Fragment.HomeFragment;
+import com.example.horizon.Fragment.NotificationFragment;
+import com.example.horizon.Fragment.ProfileFragment;
 import com.example.horizon.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -32,10 +38,10 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//    BottomNavigationView bottomNavigationView;
-//    HomeFragment homeFragment = new HomeFragment();
-//    NotificationFragment notificationFragment = new NotificationFragment();
-//    ProfileFragment profileFragment = new ProfileFragment();
+    BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment();
+    NotificationFragment notificationFragment = new NotificationFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
 
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
@@ -50,26 +56,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//    bottomNavigationView = findViewById(R.id.bottom_navigation);
-//
-//    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-//    bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-//        @Override
-//        public boolean onNavigationItemSelected( MenuItem item) {
-//            int itemId = item.getItemId();
-//            if (itemId == R.id.nav_home) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-//                return true;
-//            } else if (itemId == R.id.nav_notification) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationFragment).commit();
-//                return true;
-//            } else if (itemId == R.id.nav_profile) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
-//                return true;
-//            }
-//            return false;
-//        }
-//    });
+    bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+    bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected( MenuItem item) {
+            int itemId = item.getItemId();
+            if (itemId == R.id.nav_home) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                return true;
+            } else if (itemId == R.id.nav_notification) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationFragment).commit();
+                return true;
+            } else if (itemId == R.id.nav_profile) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                return true;
+            }
+            return false;
+        }
+    });
 
 initView();
 banner();
