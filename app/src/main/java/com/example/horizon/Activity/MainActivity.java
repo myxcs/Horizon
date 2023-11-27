@@ -86,6 +86,7 @@ sendRequest();
             ListGame items = gson.fromJson(response, ListGame.class);
             adapterBestGames = new GamesListAdapter(items);
             recyclerViewBestGames.setAdapter(adapterBestGames);
+
         }, error -> {
             loading1.setVisibility(View.GONE);
             Log.i("myXcs", "onErrorResponse: " + error.toString());
