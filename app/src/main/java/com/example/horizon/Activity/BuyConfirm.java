@@ -10,33 +10,35 @@ import android.widget.ImageView;
 
 import com.example.horizon.R;
 
-public class DetailActivity extends AppCompatActivity {
-
+public class BuyConfirm extends AppCompatActivity {
     private ImageView back;
-    private Button buy;
+    private Button buyConfirm;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
+        setContentView(R.layout.activity_buy_confirm);
+
         back = findViewById(R.id.back_button);
-        buy = findViewById(R.id.buy_button);
+        buyConfirm = findViewById(R.id.buy_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, MainActivity.class);
+                Intent intent = new Intent(BuyConfirm.this, DetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(intent);
 
             }
         });
-        buy.setOnClickListener(new View.OnClickListener() {
+        buyConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
+                Intent intent = new Intent(BuyConfirm.this, BuySuccess.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(intent);
-            } });
-        }
+            }
+        });
+    }
 }
