@@ -43,12 +43,16 @@ private FirebaseFirestore db;
                 auth.signOut();
                 SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("rememberMe", false);
-                editor.apply();
-                editor.commit();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
-                getActivity().finish();
+
+                    editor.putBoolean("rememberMe", false);
+                    editor.apply();
+                    editor.commit();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    getActivity().finish();
+                    Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+
+
+
             }
         });
         return view;
