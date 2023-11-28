@@ -33,6 +33,10 @@ public class ProfileFragment extends Fragment {
 
     private ImageView back_button;
     private TextView player_money;
+    private Button logout;
+    private FirebaseAuth auth;
+    private FirebaseFirestore db;
+
 
 
 
@@ -61,6 +65,26 @@ public class ProfileFragment extends Fragment {
             }
         });
         player_money.setText("000.000.000"+" VND");
+
+
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        logout = view.findViewById(R.id.logout_button);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                auth.signOut();
+                SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putBoolean("rememberMe", false);
+                editor.apply();
+                editor.commit();
+                Intent intent = new Intent(getContext(), LoginActivity.class);
+                getActivity().finish();
+                Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }
