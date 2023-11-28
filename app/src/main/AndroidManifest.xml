@@ -15,6 +15,9 @@
         android:theme="@style/Theme.AppCompat.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.Recharge"
+            android:exported="false" />
+        <activity
             android:name=".Activity.BuySuccess"
             android:exported="false" />
         <activity

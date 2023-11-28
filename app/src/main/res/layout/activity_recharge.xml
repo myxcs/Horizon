@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:id="@+id/frame_layout"
     android:background="@drawable/backgroud"
-    tools:context=".Activity.BuyConfirm">
+    tools:context=".Activity.Recharge">
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,21 +17,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
 
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="100dp">
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="100dp"
-                android:layout_marginEnd="24dp"
-
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/buy_confirm" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout"
@@ -58,7 +46,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xác nhận mua"
+                android:text="Nạp tiền"
                 android:textSize="30sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
@@ -68,30 +56,26 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
-            android:id="@+id/player_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xác nhận thanh toán"
+            android:text="Nhập CODE"
             android:textAlignment="center"
             android:textStyle="bold"
             android:textSize="25sp"
             android:textColor="#8BC34A"
-            android:layout_marginTop="20dp"/>
-        <TextView
-            android:id="@+id/player_money"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Số dư tài khoản"
-            android:textAlignment="center"
-            android:textStyle="italic"
-            android:textSize="15sp"
-            android:textColor="#E91E63"
             android:layout_marginTop="10dp"/>
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/recharge"
+            android:hint="Nhập code tại đây!"/>
         <Button
-            android:id="@+id/buy_button"
+            android:id="@+id/button_recharge"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Mua ngay"
+            android:text="Nạp ngay"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_background"
             android:textAlignment="center"
@@ -101,30 +85,14 @@
             android:layout_marginTop="20dp"
             />
         <TextView
-            android:id="@+id/button_recharge"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Số dư không đủ? Nạp ngay!"
+            android:layout_marginTop="30dp"
+            android:layout_width="300dp"
+            android:textSize="15dp"
+            android:layout_gravity="center_horizontal"
             android:textAlignment="center"
-            android:textStyle="italic"
-            android:textSize="15sp"
-            android:textColor="#E91E63"
-            android:layout_marginTop="50dp"/>
-
-
+            android:layout_height="wrap_content"
+            android:text="Mua code chính hãng tại các đại lý trên toàn quốc! Không sự dụng code trôi nổi trên mạng"/>
 
     </LinearLayout>
-
-
-
-
-
-
-
-
-
-
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

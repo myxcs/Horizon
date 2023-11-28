@@ -16,10 +16,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.horizon.Activity.LoginActivity;
 import com.example.horizon.Activity.MainActivity;
+import com.example.horizon.Activity.Recharge;
 import com.example.horizon.R;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
@@ -30,6 +32,7 @@ public class ProfileFragment extends Fragment {
 
 
     private ImageView back_button;
+    private TextView player_money;
 
 
 
@@ -40,6 +43,7 @@ public class ProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
         back_button = view.findViewById(R.id.back_button);
+        player_money = view.findViewById(R.id.player_money);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +52,15 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        player_money.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Recharge.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        player_money.setText("000.000.000"+" VND");
         return view;
     }
 }

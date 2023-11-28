@@ -81,16 +81,20 @@
                 android:textSize="25sp"
                 android:textColor="#8BC34A"
                 android:layout_marginTop="10dp"/>
-            <TextView
-                android:id="@+id/player_money"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="số dư tài khoản"
-                android:textAlignment="center"
-                android:textStyle="italic"
-                android:textSize="15sp"
-                android:textColor="#E91E63"
-                android:layout_marginTop="10dp"/>
+
+                <TextView
+                    android:id="@+id/player_money"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="số dư tài khoản"
+                    android:textAlignment="center"
+                    android:textStyle="italic"
+                    android:textSize="20sp"
+                    android:textColor="#E91E63"
+                    android:layout_marginTop="10dp"/>
+
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
