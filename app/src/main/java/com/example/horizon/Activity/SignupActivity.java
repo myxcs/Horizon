@@ -44,7 +44,7 @@ public class SignupActivity extends AppCompatActivity {
         //database cho phần đăng kí
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        reference = FirebaseDatabase.getInstance().getReference().child("Users");
+     //   reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         signupName = findViewById(R.id.signup_name);
@@ -105,11 +105,14 @@ public class SignupActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                      //   set data user lên firebase
                         UserModel userModel = new UserModel(userName, userMail, userPass);
+                        String id = task.getResult().getUser().getUid();
+                        database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
+
 //                        reference.child("user").child(String.valueOf(id)).setValue(userModel);
 //                        reference.child("User").child(String.valueOf(userModel.getUserId())).setValue(userModel);
-//
-           //             database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
-                        reference.push().setValue(userModel);
+//                        database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
+                          //push dữ liệu
+//                        reference.push().setValue(userModel);
                         Toast.makeText(SignupActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     }

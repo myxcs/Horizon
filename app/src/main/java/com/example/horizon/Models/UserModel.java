@@ -63,13 +63,13 @@ public class UserModel {
 //        this.money = money;
 //    }
 
-    @Override
-    public String toString() {
-        return "UserModel{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                '}';
-    }
+//    @Override
+//    public String toString() {
+//        return "UserModel{" +
+//                "name='" + name + '\'' +
+//                ", email='" + email + '\'' +
+//                ", password='" + password + '\'' +
+//                '}';
+//    }
 }
 
