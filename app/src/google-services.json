@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_number": "38674785833",
-    "project_id": "horizon-b8e7d",
-    "firebase_url": "https://horizon-b8e7d-default-rtdb.asia-southeast1.firebasedatabase.app",
-    "storage_bucket": "horizon-b8e7d.appspot.com"
+    "project_number": "499043529536",
+    "project_id": "horizon-7a734",
+    "storage_bucket": "horizon-7a734.appspot.com",
+    "firebase_url": "https://horizon-7a734-default-rtdb.asia-southeast1.firebasedatabase.app/"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:38674785833:android:e5cf293937797a0554de38",
+        "mobilesdk_app_id": "1:499043529536:android:7469c2c57f5e6541c0c0a5",
         "android_client_info": {
           "package_name": "com.example.horizon"
         }

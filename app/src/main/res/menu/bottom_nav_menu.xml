@@ -9,7 +9,7 @@
         android:title="Trang chủ" />
     <item
         android:id="@+id/nav_notification"
-        android:icon="@drawable/notifications"
+        android:icon="@drawable/shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:title="Thông báo" />

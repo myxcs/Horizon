@@ -24,7 +24,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.horizon.Adapters.GamesListAdapter;
+//import com.example.horizon.Adapters.GamesListAdapter;
 import com.example.horizon.Adapters.SliderAdapters;
 import com.example.horizon.Domian.ListGame;
 import com.example.horizon.Domian.SliderItems;

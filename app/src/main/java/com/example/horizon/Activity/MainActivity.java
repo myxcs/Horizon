@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -21,22 +22,38 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.horizon.Adapters.GamesListAdapter;
+//import com.example.horizon.Adapters.GamesListAdapter;
+import com.example.horizon.Adapters.PopularAdapters;
 import com.example.horizon.Adapters.SliderAdapters;
 import com.example.horizon.Domian.ListGame;
 import com.example.horizon.Domian.SliderItems;
 import com.example.horizon.Fragment.HomeFragment;
 import com.example.horizon.Fragment.NotificationFragment;
 import com.example.horizon.Fragment.ProfileFragment;
+import com.example.horizon.Models.PopularModel;
 import com.example.horizon.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    RecyclerView popularGames;
+    List<PopularModel> popularModelsList;
+
+
+
+    FirebaseAuth auth;
+    FirebaseFirestore db;
 
     BottomNavigationView bottomNavigationView;
     HomeFragment homeFragment = new HomeFragment();
@@ -45,8 +62,12 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
-    private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
-    private RecyclerView recyclerViewBestGames, recyclerViewUpcomingGames, recyclerViewCategory;
+    private RecyclerView.Adapter adapterPopularGames;
+    private RecyclerView recyclerViewPopularGames;
+    private PopularAdapters popularAdapters;
+
+   // private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
+    //private RecyclerView recyclerViewBestGames, recyclerViewUpcomingGames, recyclerViewCategory;
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest, mStringRequest2, mStringRequest3;
     private ProgressBar loading1, loading2, loading3;
@@ -55,6 +76,36 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+    auth = FirebaseAuth.getInstance();
+    db = FirebaseFirestore.getInstance();
+
+        //popular games recycler
+        popularGames = findViewById(R.id.view1);
+        popularGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        popularModelsList = new ArrayList<>();
+        popularAdapters = new PopularAdapters(this, popularModelsList);
+        popularGames.setAdapter(popularAdapters);
+
+        //read firestore
+        db.collection("PopularGames")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                               PopularModel popularModel = document.toObject(PopularModel.class);
+                               popularModelsList.add(popularModel);
+                               popularAdapters.notifyDataSetChanged();
+                               loading1.setVisibility(View.GONE);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error "+ task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
 
     bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -79,26 +130,30 @@ public class MainActivity extends AppCompatActivity {
 
 initView();
 banner();
-sendRequest();
+//sendRequest();
 
 }
 
-    private void sendRequest() {
-        mRequestQueue = Volley.newRequestQueue(this);
-        loading1.setVisibility(View.VISIBLE);
-        mStringRequest = new StringRequest(Request.Method.GET, "https://moviesapi.ir/api/v1/movies?page=1", response -> {
-            Gson gson = new Gson();
-            loading1.setVisibility(View.GONE);
-            ListGame items = gson.fromJson(response, ListGame.class);
-            adapterBestGames = new GamesListAdapter(items);
-            recyclerViewBestGames.setAdapter(adapterBestGames);
+//    private void sendRequest() {
+//        mRequestQueue = Volley.newRequestQueue(this);
+//        loading1.setVisibility(View.VISIBLE);
+//        mStringRequest = new StringRequest(Request.Method.GET, "https://moviesapi.ir/api/v1/movies?page=1", response -> {
+//            Gson gson = new Gson();
+//            loading1.setVisibility(View.GONE);
+//            ListGame items = gson.fromJson(response, ListGame.class);
+//            adapterBestGames = new GamesListAdapter(items);
+//            recyclerViewBestGames.setAdapter(adapterBestGames);
+//
+//        }, error -> {
+//            loading1.setVisibility(View.GONE);
+//            Log.i("myXcs", "onErrorResponse: " + error.toString());
+//        });
+//        mRequestQueue.add(mStringRequest);
+//    }
 
-        }, error -> {
-            loading1.setVisibility(View.GONE);
-            Log.i("myXcs", "onErrorResponse: " + error.toString());
-        });
-        mRequestQueue.add(mStringRequest);
-    }
+    //popular games recycler
+
+
 
     private void banner() {
         List<SliderItems> sliderItems = new ArrayList<>();
@@ -157,12 +212,12 @@ sendRequest();
     private void initView() {
 
         viewPager2 = findViewById(R.id.viewpages);
-        recyclerViewBestGames = findViewById(R.id.view1);
-        recyclerViewBestGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewUpcomingGames = findViewById(R.id.view2);
-        recyclerViewUpcomingGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        recyclerViewCategory = findViewById(R.id.view3);
-        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewBestGames = findViewById(R.id.view1);
+//        recyclerViewBestGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewUpcomingGames = findViewById(R.id.view2);
+//        recyclerViewUpcomingGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+//        recyclerViewCategory = findViewById(R.id.view3);
+//        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         loading1 = findViewById(R.id.progressBar1);
         loading2 = findViewById(R.id.progressBar2);
         loading3 = findViewById(R.id.progressBar3);
