@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.horizon.R;
 
 public class BuyConfirm extends AppCompatActivity {
     private ImageView back;
     private Button buyConfirm;
+
+    private TextView recharge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,7 @@ public class BuyConfirm extends AppCompatActivity {
 
         back = findViewById(R.id.back_button);
         buyConfirm = findViewById(R.id.buy_button);
+        recharge = findViewById(R.id.button_recharge);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -36,6 +40,15 @@ public class BuyConfirm extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(BuyConfirm.this, BuySuccess.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+                startActivity(intent);
+            }
+        });
+        recharge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuyConfirm.this, Recharge.class);
+                intent.setFlags((Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 finish();
                 startActivity(intent);
             }
