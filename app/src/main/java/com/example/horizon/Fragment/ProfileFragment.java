@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.horizon.Activity.ChangeProfile;
 import com.example.horizon.Activity.LoginActivity;
 import com.example.horizon.Activity.MainActivity;
 import com.example.horizon.Activity.Recharge;
@@ -33,6 +34,7 @@ public class ProfileFragment extends Fragment {
 
     private ImageView back_button;
     private TextView player_money;
+    private TextView player_name;
     private Button logout;
     private FirebaseAuth auth;
     private FirebaseFirestore db;
@@ -48,6 +50,7 @@ public class ProfileFragment extends Fragment {
 
         back_button = view.findViewById(R.id.back_button);
         player_money = view.findViewById(R.id.player_money);
+        player_name = view.findViewById(R.id.player_name);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,6 +68,15 @@ public class ProfileFragment extends Fragment {
             }
         });
         player_money.setText("000.000.000"+" VND");
+
+        player_name.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangeProfile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
 
 
 
