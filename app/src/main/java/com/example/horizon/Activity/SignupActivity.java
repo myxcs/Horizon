@@ -74,9 +74,11 @@ public class SignupActivity extends AppCompatActivity {
     private void createUser() {
 
         //tạo user
+
         String userMail = signupEmail.getText().toString();
         String userPass = signupPassword.getText().toString();
         String userName = signupName.getText().toString();
+
 
         //ktra nhập
         if (TextUtils.isEmpty(userName)) {
@@ -106,7 +108,7 @@ public class SignupActivity extends AppCompatActivity {
 //                        reference.child("user").child(String.valueOf(id)).setValue(userModel);
 //                        reference.child("User").child(String.valueOf(userModel.getUserId())).setValue(userModel);
 //
-//                        database.getReference().child("Users").child(id).setValue(userModel);
+           //             database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
                         reference.push().setValue(userModel);
                         Toast.makeText(SignupActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));

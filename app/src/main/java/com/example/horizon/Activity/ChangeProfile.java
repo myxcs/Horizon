@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,9 +55,13 @@ public class ChangeProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String name = change_name.getText().toString();
-                userModel = new UserModel(name);
-                reference.child(auth.getCurrentUser().getUid()).setValue(userModel);
-                Toast.makeText(ChangeProfile.this,"Đổi tên thành công", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(ChangeProfile.this,"Vui lòng nhập tên", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(ChangeProfile.this,"Đổi tên thành công", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
     }
