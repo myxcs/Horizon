@@ -1,6 +1,7 @@
 package com.example.horizon.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.horizon.Activity.DetailActivity;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.R;
 
@@ -37,7 +39,12 @@ private List<PopularModel> popularModelsList;
 
         Glide.with(context).load(popularModelsList.get(position).getImg_url()).into(holder.popImg);
         holder.name.setText(popularModelsList.get(position).getName());
-    }
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
+            intent.putExtra("name", popularModelsList.get(position).getName());
+            context.startActivity(intent);
+        }
+        );}
 
     @Override
     public int getItemCount() {
@@ -53,6 +60,8 @@ private List<PopularModel> popularModelsList;
             popImg = itemView.findViewById(R.id.pop_img);
             name = itemView.findViewById(R.id.game_name);
         }
+
+
     }
 
 }
