@@ -1,6 +1,7 @@
 package com.example.horizon.Models;
 
 public class UserModel {
+
     String name;
     String email;
     String password;
@@ -9,10 +10,15 @@ public class UserModel {
 
     }
 
-    public UserModel(String name, String email, String password) {
+    public UserModel( String name, String email, String password) {
+
         this.name = name;
         this.email = email;
         this.password = password;
+
+    }
+    public UserModel(String name) {
+        this.name = name;
     }
 
 
@@ -39,4 +45,13 @@ public class UserModel {
     public void setPassword(String password) {
         this.password = password;
     }
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
+

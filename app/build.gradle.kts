@@ -41,6 +41,11 @@ android {
 
 dependencies {
 
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation ( platform ( "com.google.firebase:firebase-bom:32.6.0" ))
+    implementation ("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-storage:20.3.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.android.volley:volley:1.2.1")

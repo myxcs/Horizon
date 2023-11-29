@@ -28,14 +28,14 @@ public class SignupActivity extends AppCompatActivity {
 
     //tạo account
 
-     FirebaseAuth auth;
-     FirebaseDatabase database;
-     DatabaseReference reference;
+     private FirebaseAuth auth;
+     private FirebaseDatabase database;
+     private DatabaseReference reference;
 
-     UserModel userModel;
-     EditText signupEmail, signupPassword, signupName;
-     Button signupBtn;
-     TextView loginRedirectText;
+     private UserModel userModel;
+    private EditText signupEmail, signupPassword, signupName;
+    private Button signupBtn;
+    private TextView loginRedirectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,9 @@ public class SignupActivity extends AppCompatActivity {
                     if(task.isSuccessful()) {
                      //   set data user lên firebase
                         UserModel userModel = new UserModel(userName, userMail, userPass);
-//                        String id = task.getResult().getUser().getUid();
+//                        reference.child("user").child(String.valueOf(id)).setValue(userModel);
+//                        reference.child("User").child(String.valueOf(userModel.getUserId())).setValue(userModel);
+//
 //                        database.getReference().child("Users").child(id).setValue(userModel);
                         reference.push().setValue(userModel);
                         Toast.makeText(SignupActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
