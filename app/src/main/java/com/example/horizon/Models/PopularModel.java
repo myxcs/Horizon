@@ -5,13 +5,18 @@ import java.io.Serializable;
 public class PopularModel implements Serializable {
     String name;
     String img_url;
+    String description;
+
+    int price;
 
     public PopularModel() {
     }
 
-    public PopularModel(String name, String img_url) {
+    public PopularModel(String name, String img_url, String description, int price) {
         this.name = name;
         this.img_url = img_url;
+        this.description = description;
+        this.price = price;
     }
 
     public String getName() {
@@ -29,4 +34,24 @@ public class PopularModel implements Serializable {
     public void setImg_url(String img_url) {
         this.img_url = img_url;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }
+
+
+
+

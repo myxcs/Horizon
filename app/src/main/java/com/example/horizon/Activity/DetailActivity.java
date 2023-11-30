@@ -1,5 +1,6 @@
 package com.example.horizon.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,15 +14,27 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView back;
-    private Button buy;
+    private Button addToCart;
 
     ImageView detailImg;
     TextView detailName;
     PopularModel popularModel =null;
+
+    FirebaseFirestore firestore;
+    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +49,17 @@ public class DetailActivity extends AppCompatActivity {
         //activity to activity
         detailImg = findViewById(R.id.game_pics);
         detailName = findViewById(R.id.game_name);
-        buy = findViewById(R.id.buy_button);
+        addToCart = findViewById(R.id.buy_button);
+
+        firestore = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        //mua
+        addToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+           addedToCart();
+            }
+        });
 
 
        // String img_url = popularModel.getImg_url();
@@ -61,13 +84,43 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
-        buy.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                finish();
-                startActivity(intent);
-            } });
+//        buy.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                finish();
+//                startActivity(intent);
+//            } });
         }
+
+    private void addedToCart() {
+        String saveCurrentDate, saveCurrentTime;
+        Calendar calForDate = Calendar.getInstance();
+
+        SimpleDateFormat currentDate = new SimpleDateFormat("MMM dd, yyyy");
+        saveCurrentDate = currentDate.format(calForDate.getTime());
+
+        SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
+        saveCurrentTime = currentTime.format(calForDate.getTime());
+
+
+        final HashMap<String, Object> cartMap = new HashMap<>();
+        cartMap.put("productName", popularModel.getName());
+      //  cartMap.put("productPrice", popularModel.getPrice());
+        cartMap.put("currentDate", saveCurrentDate);
+        cartMap.put("currentTime", saveCurrentTime);
+
+        firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
+        .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+            @Override
+            public void onComplete(@NonNull Task<DocumentReference> task) {
+                Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+
+    }
 }

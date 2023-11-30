@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,17 +17,25 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.horizon.Activity.LoginActivity;
+import com.example.horizon.Adapters.MyCartAdapter;
+import com.example.horizon.Models.MyCartModel;
 import com.example.horizon.R;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class NotificationFragment extends Fragment {
 
-   private Button clickme;
-private FirebaseAuth auth;
-private FirebaseFirestore db;
+ FirebaseAuth auth;
+ FirebaseFirestore db;
+
+RecyclerView recyclerView;
+MyCartAdapter myCartAdapter;
+List<MyCartModel> cartModelList
 
 
     @Override
@@ -36,25 +46,14 @@ private FirebaseFirestore db;
 
         FirebaseAuth auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        clickme = view.findViewById(R.id.clickme);
-        clickme.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                auth.signOut();
-                SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
 
-                    editor.putBoolean("rememberMe", false);
-                    editor.apply();
-                    editor.commit();
-                    Intent intent = new Intent(getContext(), LoginActivity.class);
-                    getActivity().finish();
-                    Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+        auth = FirebaseAuth.getInstance();
 
+        recyclerView = view.findViewById(R.id.cart_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-            }
-        });
+        cartModelList = new ArrayList<>();
+        myCartAdapter = new MyCartAdapter(getActivity(),cartModelList);
         return view;
     }
 }

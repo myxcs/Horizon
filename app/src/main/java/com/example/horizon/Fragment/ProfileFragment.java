@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -26,6 +27,11 @@ import com.example.horizon.Activity.Recharge;
 import com.example.horizon.R;
 import com.google.firebase.Firebase;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -39,6 +45,11 @@ public class ProfileFragment extends Fragment {
     private FirebaseAuth auth;
     private FirebaseFirestore db;
 
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    DatabaseReference databaseReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
 
 
 
@@ -48,9 +59,26 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+
         back_button = view.findViewById(R.id.back_button);
         player_money = view.findViewById(R.id.player_money);
         player_name = view.findViewById(R.id.player_name);
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                player_name.setText(text);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+              //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
