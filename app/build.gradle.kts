@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    //trust me i cant tell why this shit could be this long with this shity project
 
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     implementation("com.makeramen:roundedimageview:2.3.0")

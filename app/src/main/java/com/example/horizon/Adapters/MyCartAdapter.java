@@ -19,6 +19,12 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
     Context context;
     List<MyCartModel> cartModelList;
 
+    public MyCartAdapter (Context context, List<MyCartModel> cartModelList){
+        this.context = context;
+        this.cartModelList = cartModelList;
+
+    }
+
 
     @NonNull
     @Override
@@ -28,7 +34,7 @@ public class MyCartAdapter extends RecyclerView.Adapter<MyCartAdapter.ViewHolder
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.name.setText(cartModelList.get(position).getGameName());
+        holder.name.setText(cartModelList.get(position).getProductName());
         holder.date.setText(cartModelList.get(position).getCurrentDate());
         holder.time.setText(cartModelList.get(position).getCurrentTime());
 

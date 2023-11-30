@@ -123,6 +123,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 getActivity().finish();
                 Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+                //this shit is not working sometime and i dont know why
             }
         });
         return view;

@@ -1,7 +1,7 @@
 package com.example.horizon.Models;
 
 public class MyCartModel {
-    String gameName;
+    String productName;
     String currentDate;
     String currentTime;
 
@@ -9,18 +9,18 @@ public class MyCartModel {
     public MyCartModel() {
     }
 
-    public MyCartModel(String gameName, String currentDate, String currentTime) {
-        this.gameName = gameName;
+    public MyCartModel(String productName, String currentDate, String currentTime) {
+        this.productName = productName;
         this.currentDate = currentDate;
         this.currentTime = currentTime;
     }
 
-    public String getGameName() {
-        return gameName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setGameName(String gameName) {
-        this.gameName = gameName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getCurrentDate() {

@@ -18,7 +18,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.example.horizon.Activity.DetailActivity;
 import com.example.horizon.Domian.ListGame;
 import com.example.horizon.R;
-
+//this shit is not working
 //public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.ViewHolder> {
 //
 //    ListGame items;
