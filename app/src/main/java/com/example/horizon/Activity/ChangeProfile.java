@@ -24,12 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class ChangeProfile extends AppCompatActivity {
    private ImageView back_button;
     private Button button_change_name;
-    private EditText change_name;
+
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private DatabaseReference reference;
     UserModel userModel;
 
+
+    EditText change_name;
 
 
     @Override
@@ -66,5 +68,6 @@ public class ChangeProfile extends AppCompatActivity {
 
             }
         });
+
     }
 }

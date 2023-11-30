@@ -38,7 +38,7 @@
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mua thành cng"
+                android:text="Mua thành công"
                 android:textSize="30sp"
                android:paddingTop="24dp"
                 android:textStyle="bold"

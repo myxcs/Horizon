@@ -104,7 +104,7 @@ public class SignupActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                      //   set data user lên firebase
-                        UserModel userModel = new UserModel(userName, userMail, userPass);
+                        UserModel userModel = new UserModel(userName, userMail, userPass,"");
                         String id = task.getResult().getUser().getUid();
                         database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
 

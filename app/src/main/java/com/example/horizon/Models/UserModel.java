@@ -6,18 +6,21 @@ public class UserModel {
     String name;
     String email;
     String password;
+
+    String profileImg;
 //    int money;
 
     public UserModel() {
 
     }
 
-    public UserModel( String name, String email, String password) {
+    public UserModel( String name, String email, String password, String profileImg) {
 
 //        this.uid = uid;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.profileImg = profileImg;
 //        this.money = money;
 
     }
@@ -29,6 +32,15 @@ public class UserModel {
 //    public void setUid(String uid) {
 //        this.uid = uid;
 //    }
+
+
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 
     public String getName() {
         return name;
