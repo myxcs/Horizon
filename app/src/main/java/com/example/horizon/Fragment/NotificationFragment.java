@@ -79,6 +79,9 @@ public void MyCartsFragment() {
         cartAdapter = new MyCartAdapter(getActivity(), cartModelList);
         cartList.setAdapter(cartAdapter);
 
+        //no data happened again =/
+
+
        db.collection("addToCart").document(auth.getCurrentUser().getUid())
                .collection("CurrentUser").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                    @Override

@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         popularGames.setAdapter(popularAdapters);
 
         //read firestore
+        //should not like this bro, but these no faking data, forgive me
         db.collection("PopularGames")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
