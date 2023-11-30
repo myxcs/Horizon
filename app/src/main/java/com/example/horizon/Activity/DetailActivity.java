@@ -27,7 +27,7 @@ import java.util.HashMap;
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView back;
-    private Button addToCart;
+     Button addToCart;
 
     ImageView detailImg;
     TextView detailName;
@@ -58,6 +58,10 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
            addedToCart();
+                Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
+               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                finish();
+               startActivity(intent);
             }
         });
 
@@ -117,7 +121,6 @@ public class DetailActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
-                finish();
             }
         });
 
