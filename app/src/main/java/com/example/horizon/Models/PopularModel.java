@@ -1,6 +1,8 @@
 package com.example.horizon.Models;
 
-public class PopularModel {
+import java.io.Serializable;
+
+public class PopularModel implements Serializable {
     String name;
     String img_url;
 

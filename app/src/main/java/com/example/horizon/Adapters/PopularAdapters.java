@@ -32,6 +32,8 @@ private List<PopularModel> popularModelsList;
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.popular_item, parent, false));
+
+
     }
 
     @Override
@@ -41,7 +43,7 @@ private List<PopularModel> popularModelsList;
         holder.name.setText(popularModelsList.get(position).getName());
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
-            intent.putExtra("name", popularModelsList.get(position).getName());
+            intent.putExtra("object", popularModelsList.get(position));
             context.startActivity(intent);
         }
         );}
