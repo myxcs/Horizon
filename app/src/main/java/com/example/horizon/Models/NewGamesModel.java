@@ -4,14 +4,7 @@ import java.io.Serializable;
 
 public class NewGamesModel implements Serializable {
 
-    String anhSP;
-
-
-
-
-
-
-
+    // i dont have data form admin app to make it more, their data make me feel bad
     String name;
     String img_url;
     String description;

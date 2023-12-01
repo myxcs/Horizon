@@ -146,7 +146,7 @@ public class ProfileFragment extends Fragment {
                 Long value = dataSnapshot.getValue(Long.class);
                 int moneyRaw = value.intValue();
                 String money = String.valueOf(moneyRaw);
-                player_money.setText(money + "$");
+                player_money.setText("Số dư: " + money + "$");
                 //player_money.setHint();
             }
             @Override
