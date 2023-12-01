@@ -136,7 +136,7 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-              //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error to show profile name", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -151,7 +151,7 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getContext(), "Error to show profile money", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -164,7 +164,7 @@ public class ProfileFragment extends Fragment {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+                  Toast.makeText(getContext(), "Error to show profile image", Toast.LENGTH_SHORT).show();
             }
         });
 

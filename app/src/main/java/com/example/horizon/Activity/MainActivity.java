@@ -221,6 +221,6 @@ banner();
 //        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         loading1 = findViewById(R.id.progressBar1);
         loading2 = findViewById(R.id.progressBar2);
-        loading3 = findViewById(R.id.progressBar3);
+//        loading3 = findViewById(R.id.progressBar3);
     }
 }
