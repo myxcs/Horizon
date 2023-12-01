@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 //import com.example.horizon.Adapters.GamesListAdapter;
+import com.example.horizon.Adapters.NewGamesAdapter;
 import com.example.horizon.Adapters.PopularAdapters;
 import com.example.horizon.Adapters.SliderAdapters;
 import com.example.horizon.Domian.ListGame;
@@ -30,6 +31,7 @@ import com.example.horizon.Domian.SliderItems;
 import com.example.horizon.Fragment.HomeFragment;
 import com.example.horizon.Fragment.NotificationFragment;
 import com.example.horizon.Fragment.ProfileFragment;
+import com.example.horizon.Models.NewGamesModel;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,7 +50,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView popularGames;
+    RecyclerView newGames;
     List<PopularModel> popularModelsList;
+    List<NewGamesModel> newGamesModelsList;
 
 
 
@@ -63,8 +67,12 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager2 viewPager2;
     private Handler sliderHandler = new Handler();
     private RecyclerView.Adapter adapterPopularGames;
+
+    private RecyclerView.Adapter adapterNewGames;
     private RecyclerView recyclerViewPopularGames;
+    private RecyclerView recyclerViewNewGames;
     private PopularAdapters popularAdapters;
+    private NewGamesAdapter newGamesAdapter;
 
    // private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
     //private RecyclerView recyclerViewBestGames, recyclerViewUpcomingGames, recyclerViewCategory;
@@ -87,8 +95,19 @@ public class MainActivity extends AppCompatActivity {
         popularAdapters = new PopularAdapters(this, popularModelsList);
         popularGames.setAdapter(popularAdapters);
 
+        //new games recycler
+        newGames = findViewById(R.id.view2);
+        newGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        newGamesModelsList = new ArrayList<>();
+        newGamesAdapter = new NewGamesAdapter(this, newGamesModelsList);
+        newGames.setAdapter(newGamesAdapter);
+
+
+
         //read firestore
         //should not like this bro, but these no faking data, forgive me
+
+        //popular games
         db.collection("PopularGames")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -108,6 +127,33 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
+
+        //new games
+
+        db.collection("games")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                PopularModel popularModel = document.toObject(PopularModel.class);
+//                                popularModelsList.add(popularModel);
+//                                popularAdapters.notifyDataSetChanged();
+//                                loading1.setVisibility(View.GONE);
+                                NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
+                                newGamesModelsList.add(newGamesModel);
+                                newGamesAdapter.notifyDataSetChanged();
+                                loading2.setVisibility(View.GONE);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error "+ task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+
+//navigation
     bottomNavigationView = findViewById(R.id.bottom_navigation);
 
     getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();

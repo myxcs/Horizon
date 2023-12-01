@@ -17,51 +17,111 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.horizon.Activity.DetailActivity;
 import com.example.horizon.Domian.ListGame;
+import com.example.horizon.Models.NewGamesModel;
 import com.example.horizon.R;
-//this shit is not working
+
+import java.util.List;
+
+//this shit is not working, try to fix it now
 public class NewGamesAdapter extends RecyclerView.Adapter<NewGamesAdapter.ViewHolder> {
 
-    ListGame items;
-    Context context;
+    private Context context;
+    private List<NewGamesModel> newGamesModelsList;
 
-    public NewGamesAdapter(ListGame items) {
-        this.items = items;
+    public NewGamesAdapter(Context context, List<NewGamesModel> newGamesModelsList) {
+        this.context = context;
+        this.newGamesModelsList = newGamesModelsList;
     }
+
 
     @NonNull
     @Override
-    public NewGamesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_games, parent, false);
-        return new ViewHolder(inflate);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new ViewHolder(LayoutInflater.from(context).inflate(R.layout.new_item, parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull NewGamesAdapter.ViewHolder holder, int position) {
 
-        holder.title.setText(items.getData().get(position).getTitle());
-        RequestOptions requestOptions = new RequestOptions();
-        requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
-        Glide.with(context).load(items.getData().get(position).getThumbnail()).apply(requestOptions).into(holder.pic);
+        Glide.with(context).load(newGamesModelsList.get(position).getImg_url()).into(holder.pics);
+        holder.name.setText(newGamesModelsList.get(position).getName());
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
-            intent.putExtra("id", items.getData().get(position).getId());
+            intent.putExtra("object", newGamesModelsList.get(position));
             context.startActivity(intent);
         });
     }
 
+
     @Override
     public int getItemCount() {
-        return items.getData().size();
+        return newGamesModelsList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        ImageView pic;
+
+        ImageView pics;
+        TextView name;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            title = itemView.findViewById(R.id.title);
-            pic = itemView.findViewById(R.id.pic);
+            pics = itemView.findViewById(R.id.game_pics);
+            name = itemView.findViewById(R.id.game_name);
+
         }
     }
 }
+
+
+
+
+
+
+
+
+
+//    ListGame items;
+//    Context context;
+//
+//    public NewGamesAdapter(ListGame items) {
+//        this.items = items;
+//    }
+//
+//    @NonNull
+//    @Override
+//    public NewGamesAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+//        context = parent.getContext();
+//        View inflate = LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_games, parent, false);
+//        return new ViewHolder(inflate);
+//    }
+//
+//    @Override
+//    public void onBindViewHolder(@NonNull NewGamesAdapter.ViewHolder holder, int position) {
+//
+//        holder.title.setText(items.getData().get(position).getTitle());
+//        RequestOptions requestOptions = new RequestOptions();
+//        requestOptions = requestOptions.transform(new CenterCrop(), new RoundedCorners(30));
+//        Glide.with(context).load(items.getData().get(position).getThumbnail()).apply(requestOptions).into(holder.pic);
+//        holder.itemView.setOnClickListener(v -> {
+//            Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
+//            intent.putExtra("id", items.getData().get(position).getId());
+//            context.startActivity(intent);
+//        });
+//    }
+//
+//    @Override
+//    public int getItemCount() {
+//        return items.getData().size();
+//    }
+//
+//    public class ViewHolder extends RecyclerView.ViewHolder {
+//        TextView title;
+//        ImageView pic;
+//        public ViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//            title = itemView.findViewById(R.id.title);
+//            pic = itemView.findViewById(R.id.pic);
+//        }
+//    }
+
+
