@@ -68,7 +68,7 @@ public class DetailActivity extends AppCompatActivity {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                if (dataSnapshot.getValue() == null) {
-                   Toast.makeText(DetailActivity.this, "Error to show money", Toast.LENGTH_SHORT).show();
+                   Toast.makeText(DetailActivity.this, "Error to get money", Toast.LENGTH_SHORT).show();
                    return;
                }
                else
@@ -81,6 +81,7 @@ public class DetailActivity extends AppCompatActivity {
            }
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
+               Toast.makeText(DetailActivity.this, "Error to get money", Toast.LENGTH_SHORT).show();
 
            }
        });
