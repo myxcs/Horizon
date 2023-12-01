@@ -8,23 +8,19 @@ public class UserModel {
     String password;
 
     String profileImg;
-//    int money;
+    int money;
 
     public UserModel() {
 
     }
 
-    public UserModel( String name, String email, String password, String profileImg) {
-
-//        this.uid = uid;
+    public UserModel(String name, String email, String password, String profileImg, int money) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.profileImg = profileImg;
-//        this.money = money;
-
+        this.money = money;
     }
-
 //    public String getUid() {
 //        return uid;
 //    }
@@ -67,7 +63,15 @@ public class UserModel {
         this.password = password;
     }
 
-//    public int getMoney() {
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int money) {
+        this.money = money;
+    }
+
+    //    public int getMoney() {
 //        return money;
 //    }
 //

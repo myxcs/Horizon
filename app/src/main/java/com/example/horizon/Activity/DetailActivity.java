@@ -40,6 +40,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
+//        pass ảnh game
         final Object object = getIntent().getSerializableExtra("object");
         if (object instanceof PopularModel) {
             popularModel = (PopularModel) object;
@@ -77,7 +78,6 @@ public class DetailActivity extends AppCompatActivity {
 
 
         back = findViewById(R.id.back_button);
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -66,8 +66,10 @@ public class ProfileFragment extends Fragment {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    DatabaseReference databaseReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
+    DatabaseReference getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
+    DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
 
+    DatabaseReference getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
 
 
     @Override
@@ -83,32 +85,36 @@ public class ProfileFragment extends Fragment {
         player_name = view.findViewById(R.id.player_name);
         profileImg = view.findViewById(R.id.profile_img);
         update = view.findViewById(R.id.update);
+        logout = view.findViewById(R.id.logout_button);
+
+
         storage = FirebaseStorage.getInstance();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
+
 
         //make pic appear
-        database.getReference().child("User").child(FirebaseAuth.getInstance().getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                       UserModel userModel = snapshot.getValue(UserModel.class);
-
-
-
-                        if (userModel != null) {
-
-                            // Do something with profileImg
-                            Glide.with(getContext()).load(userModel.getProfileImg()).into(profileImg);
-                        } else {
-                            // Handle the null case
-                            Toast.makeText(getContext(), "Result is null", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+//        database.getReference().child("User").child(FirebaseAuth.getInstance().getUid())
+//                .addListenerForSingleValueEvent(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                       UserModel userModel = snapshot.getValue(UserModel.class);
+//
+//                        if (userModel != null) {
+//                            // Do something with profileImg
+//                            Glide.with(getContext()).load(userModel.getProfileImg()).into(profileImg);
+//                        } else {
+//                            // Handle the null case
+//                            Toast.makeText(getContext(), "Result is null", Toast.LENGTH_SHORT).show();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
 
         profileImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +126,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        getNameDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String text = dataSnapshot.getValue(String.class);
@@ -134,6 +140,33 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Long value = dataSnapshot.getValue(Long.class);
+                int moneyRaw = value.intValue();
+                String money = String.valueOf(moneyRaw);
+                player_money.setText(money + "$");
+                //player_money.setHint();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        getProfileImgDataReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                Glide.with(getContext()).load(text).into(profileImg);
+                //player_money.setHint();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                //  Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +184,6 @@ public class ProfileFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        player_money.setText("000.000.000"+" VND");
 
         player_name.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -162,11 +194,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
-        logout = view.findViewById(R.id.logout_button);
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,6 +220,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateUserProfile() {
+
 
     }
 
