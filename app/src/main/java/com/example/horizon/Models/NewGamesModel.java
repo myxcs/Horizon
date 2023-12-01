@@ -3,24 +3,33 @@ package com.example.horizon.Models;
 import java.io.Serializable;
 
 public class NewGamesModel implements Serializable {
+
+    String anhSP;
+
+
+
+
+
+
+
     String name;
     String img_url;
     String description;
     String dungluong;
 
-    int price;
+    int gia;
      int maloai;
      int soluongtai;
 
     public NewGamesModel() {
     }
 
-    public NewGamesModel(String name, String img_url, String description, String dungluong, int price, int maloai, int soluongtai) {
+    public NewGamesModel(String name, String img_url, String description, String dungluong, int gia, int maloai, int soluongtai) {
         this.name = name;
         this.img_url = img_url;
         this.description = description;
         this.dungluong = dungluong;
-        this.price = price;
+        this.gia= gia;
         this.maloai = maloai;
         this.soluongtai = soluongtai;
     }
@@ -57,12 +66,12 @@ public class NewGamesModel implements Serializable {
         this.dungluong = dungluong;
     }
 
-    public int getPrice() {
-        return price;
+    public int getGia() {
+        return gia;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setGia(int gia) {
+        this.gia = gia;
     }
 
     public int getMaloai() {

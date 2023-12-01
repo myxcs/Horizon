@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             tools:ignore="MissingConstraints">
 
@@ -164,10 +164,34 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="30dp"
-                    android:text="Phần giới thiệu"
+                    android:text="Phần giới thiệu:"
+                    android:textStyle="bold"
                     />
-
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="description"
+                android:layout_margin="20dp"
+                />
+            <TextView
+                android:id="@+id/storage_0"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Dung lượng"
+                android:textStyle="bold"
+                android:layout_margin="20dp"
+                />
+            <TextView
+                android:id="@+id/storage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="dung lượng:"
+                android:layout_marginStart="20dp"
+                />
+
 
             </LinearLayout>
 

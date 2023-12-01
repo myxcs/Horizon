@@ -6,16 +6,22 @@ public class PopularModel implements Serializable {
     String name;
     String img_url;
     String description;
+    String storage;
 
+    int downloaded;
+    int genre;
     int price;
 
     public PopularModel() {
     }
 
-    public PopularModel(String name, String img_url, String description, int price) {
+    public PopularModel(String name, String img_url, String description, String storage, int downloaded, int genre, int price) {
         this.name = name;
         this.img_url = img_url;
         this.description = description;
+        this.storage = storage;
+        this.downloaded = downloaded;
+        this.genre = genre;
         this.price = price;
     }
 
@@ -41,6 +47,30 @@ public class PopularModel implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStorage() {
+        return storage;
+    }
+
+    public void setStorage(String storage) {
+        this.storage = storage;
+    }
+
+    public int getDownloaded() {
+        return downloaded;
+    }
+
+    public void setDownloaded(int downloaded) {
+        this.downloaded = downloaded;
+    }
+
+    public int getGenre() {
+        return genre;
+    }
+
+    public void setGenre(int genre) {
+        this.genre = genre;
     }
 
     public int getPrice() {

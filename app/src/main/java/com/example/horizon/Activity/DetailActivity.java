@@ -28,10 +28,11 @@ public class DetailActivity extends AppCompatActivity {
 
     private ImageView back;
      Button addToCart;
-
-    ImageView detailImg;
-    TextView detailName;
-    PopularModel popularModel =null;
+     ImageView detailImg;
+     TextView detailName;
+     TextView detailDescription;
+     TextView detailStorage;
+     PopularModel popularModel =null;
 
     FirebaseFirestore firestore;
     FirebaseAuth auth;
@@ -50,6 +51,8 @@ public class DetailActivity extends AppCompatActivity {
         //activity to activity
         detailImg = findViewById(R.id.game_pics);
         detailName = findViewById(R.id.game_name);
+        detailDescription = findViewById(R.id.description);
+        detailStorage = findViewById(R.id.storage);
         addToCart = findViewById(R.id.buy_button);
 
         firestore = FirebaseFirestore.getInstance();
@@ -66,17 +69,21 @@ public class DetailActivity extends AppCompatActivity {
             }
         });
 
-
        // String img_url = popularModel.getImg_url();
         if (popularModel != null) {
             Glide.with(getApplicationContext()).load(popularModel.getImg_url()).into(detailImg);
             detailName.setText(popularModel.getName());
+            detailDescription.setText(popularModel.getDescription());
+            detailStorage.setText(popularModel.getStorage());
+        }
+        else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
 //        Glide.with(getApplicationContext()).load(img_url).into(detailImg);
 
 
-
+//phím back, thi thoảng lỗi
         back = findViewById(R.id.back_button);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +105,9 @@ public class DetailActivity extends AppCompatActivity {
 //            } });
         }
 
+
+
+        //đưa thông tin mua hàng lên firestore
     private void addedToCart() {
         String saveCurrentDate, saveCurrentTime;
         Calendar calForDate = Calendar.getInstance();
@@ -123,7 +133,5 @@ public class DetailActivity extends AppCompatActivity {
                 Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
 }
