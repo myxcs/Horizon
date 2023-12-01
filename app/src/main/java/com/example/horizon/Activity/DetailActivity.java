@@ -35,6 +35,7 @@ public class DetailActivity extends AppCompatActivity {
     private ImageView back;
 
      private String money;
+     private int moneyRaw;
      Button addToCart;
      ImageView detailImg;
      TextView detailName;
@@ -74,7 +75,7 @@ public class DetailActivity extends AppCompatActivity {
                else
                {
                    Long value = dataSnapshot.getValue(Long.class);
-                   int moneyRaw = value.intValue();
+                    moneyRaw = value.intValue();
                    money = String.valueOf(moneyRaw);
                    //player_money.setHint();
                }
@@ -102,21 +103,20 @@ public class DetailActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
 
 
-
         //mua
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if(money>= popularModel.getPrice()){
+                if(moneyRaw>= popularModel.getPrice()){
                     addedToCart();
                     Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     finish();
                     startActivity(intent);
-//                }
-//                else{
-//                    Toast.makeText(DetailActivity.this, "Buy failed", Toast.LENGTH_SHORT).show();
-//                }
+                }
+                else{
+                    Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
