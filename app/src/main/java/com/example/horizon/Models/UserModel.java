@@ -1,6 +1,8 @@
 package com.example.horizon.Models;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
 //    String uid;
 
     String name;

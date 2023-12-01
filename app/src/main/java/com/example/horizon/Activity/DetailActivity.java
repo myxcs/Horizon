@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.horizon.Models.PopularModel;
+import com.example.horizon.Models.UserModel;
 import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +34,10 @@ public class DetailActivity extends AppCompatActivity {
      TextView detailDescription;
      TextView detailStorage;
      PopularModel popularModel =null;
+
+     UserModel userModel;
+
+
 
     FirebaseFirestore firestore;
     FirebaseAuth auth;
@@ -121,7 +126,9 @@ public class DetailActivity extends AppCompatActivity {
 
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("productName", popularModel.getName());
-      //  cartMap.put("productPrice", popularModel.getPrice());
+     //  cartMap.put("userMail", userModel.getEmail());
+        cartMap.put("productPrice", popularModel.getPrice());
+        cartMap.put("Downloaded", popularModel.getDownloaded()+1);
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);
 

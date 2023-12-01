@@ -143,11 +143,18 @@ public class ProfileFragment extends Fragment {
         getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.getValue() == null) {
+                    player_money.setText("Số dụ: 0$");
+                    return;
+                }
+                else
+                {
                 Long value = dataSnapshot.getValue(Long.class);
                 int moneyRaw = value.intValue();
                 String money = String.valueOf(moneyRaw);
                 player_money.setText("Số dư: " + money + "$");
                 //player_money.setHint();
+                    }
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
