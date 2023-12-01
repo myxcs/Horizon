@@ -16,12 +16,16 @@ import android.widget.Toast;
 
 import com.example.horizon.Fragment.ProfileFragment;
 import com.example.horizon.Models.PopularModel;
+import com.example.horizon.Models.UserModel;
 import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -37,10 +41,14 @@ public class Recharge extends AppCompatActivity {
     private EditText recharge_code;
 
     FirebaseAuth auth;
-    FirebaseDatabase database;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference reference;
 
     PopularModel popularModel =null;
+
+    UserModel userModel;
+
+  //  DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
 
     FirebaseFirestore firestore;
   //  public TextView player_money;
@@ -66,6 +74,26 @@ public class Recharge extends AppCompatActivity {
             }
         });
 
+        //lấy money
+//       getGetMoneyDataReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//           @Override
+//           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//               if (dataSnapshot.getValue() == null) {
+//                   // Handle the null case
+//                   Toast.makeText(Recharge.this, "Số dụ: 0$", Toast.LENGTH_SHORT).show();
+//               } else {
+//                   Long value = dataSnapshot.getValue(Long.class);
+//                   int moneyRaw = value.intValue();
+//                   String userMoney = String.valueOf(moneyRaw);
+//                 //  Toast.makeText(Recharge.this, "Số dụ: " + money + "$", Toast.LENGTH_SHORT).show();
+//               }
+//           }
+//
+//           @Override
+//           public void onCancelled(@NonNull DatabaseError error) {
+//               Toast.makeText(Recharge.this, "Error to show money", Toast.LENGTH_SHORT).show();
+//           }
+//       });
         recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -89,6 +117,15 @@ public class Recharge extends AppCompatActivity {
     }
 
     private void rechargeRequest() {
+
+        //lấy money
+//        userModel = new UserModel();
+//        int money = userModel.getMoney();
+//        String moneyString = String.valueOf(money);
+
+       // Toast.makeText(Recharge.this, " Số dụ: " + moneyString + "$", Toast.LENGTH_SHORT).show();
+
+        //lấy thời gian
         String saveCurrentDate, saveCurrentTime;
         Calendar calForDate = Calendar.getInstance();
 
@@ -99,7 +136,8 @@ public class Recharge extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
         final HashMap<String, Object> cartMap = new HashMap<>();
-
+        cartMap.put("userMail", auth.getCurrentUser().getEmail());
+        //cartMap.put("userMoney", moneyString);
         cartMap.put("moneyRecharge", recharge_code.getText().toString());
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);

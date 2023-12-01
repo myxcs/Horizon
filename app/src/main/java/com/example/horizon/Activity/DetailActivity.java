@@ -18,6 +18,11 @@ import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -28,6 +33,8 @@ import java.util.HashMap;
 public class DetailActivity extends AppCompatActivity {
 
     private ImageView back;
+
+     private String money;
      Button addToCart;
      ImageView detailImg;
      TextView detailName;
@@ -35,11 +42,16 @@ public class DetailActivity extends AppCompatActivity {
      TextView detailStorage;
      PopularModel popularModel =null;
 
-     UserModel userModel;
+     UserModel userModel=null;
 
 
 
     FirebaseFirestore firestore;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+
     FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +64,31 @@ public class DetailActivity extends AppCompatActivity {
             popularModel = (PopularModel) object;
         }
 
+       getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
+           @Override
+           public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               if (dataSnapshot.getValue() == null) {
+                   Toast.makeText(DetailActivity.this, "Error to show money", Toast.LENGTH_SHORT).show();
+                   return;
+               }
+               else
+               {
+                   Long value = dataSnapshot.getValue(Long.class);
+                   int moneyRaw = value.intValue();
+                   money = String.valueOf(moneyRaw);
+                   //player_money.setHint();
+               }
+           }
+           @Override
+           public void onCancelled(@NonNull DatabaseError error) {
+
+           }
+       });
+
+
+
+
+
 
         //activity to activity
         detailImg = findViewById(R.id.game_pics);
@@ -62,15 +99,24 @@ public class DetailActivity extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+
+
+
         //mua
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-           addedToCart();
-                Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
-               intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                finish();
-               startActivity(intent);
+//                if(money>= popularModel.getPrice()){
+                    addedToCart();
+                    Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    finish();
+                    startActivity(intent);
+//                }
+//                else{
+//                    Toast.makeText(DetailActivity.this, "Buy failed", Toast.LENGTH_SHORT).show();
+//                }
+
             }
         });
 
@@ -85,9 +131,6 @@ public class DetailActivity extends AppCompatActivity {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
         }
 
-//        Glide.with(getApplicationContext()).load(img_url).into(detailImg);
-
-
 //phím back, thi thoảng lỗi
         back = findViewById(R.id.back_button);
         back.setOnClickListener(new View.OnClickListener() {
@@ -100,20 +143,11 @@ public class DetailActivity extends AppCompatActivity {
 
             }
         });
-//        buy.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//                finish();
-//                startActivity(intent);
-//            } });
         }
-
-
-
         //đưa thông tin mua hàng lên firestore
     private void addedToCart() {
+
+//lấy thời gian
         String saveCurrentDate, saveCurrentTime;
         Calendar calForDate = Calendar.getInstance();
 
@@ -124,9 +158,13 @@ public class DetailActivity extends AppCompatActivity {
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
 
+
+        //them vao cart
+        //hell nah sau cả buôi tôi cũng fix đc cái user money, bây h là 5 giờ sáng, tôi hối hận
         final HashMap<String, Object> cartMap = new HashMap<>();
         cartMap.put("productName", popularModel.getName());
-     //  cartMap.put("userMail", userModel.getEmail());
+        cartMap.put("userMail", auth.getCurrentUser().getEmail());
+        cartMap.put("userMoney", money);
         cartMap.put("productPrice", popularModel.getPrice());
         cartMap.put("Downloaded", popularModel.getDownloaded()+1);
         cartMap.put("currentDate", saveCurrentDate);

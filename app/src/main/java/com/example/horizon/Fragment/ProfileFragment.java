@@ -52,6 +52,8 @@ public class ProfileFragment extends Fragment {
 
 
     private ImageView back_button;
+
+    private String money;
     private TextView player_money;
     private EditText player_name;
     CircleImageView profileImg;
@@ -151,7 +153,7 @@ public class ProfileFragment extends Fragment {
                 {
                 Long value = dataSnapshot.getValue(Long.class);
                 int moneyRaw = value.intValue();
-                String money = String.valueOf(moneyRaw);
+                 money = String.valueOf(moneyRaw);
                 player_money.setText("Số dư: " + money + "$");
                 //player_money.setHint();
                     }
@@ -161,6 +163,8 @@ public class ProfileFragment extends Fragment {
                   Toast.makeText(getContext(), "Error to show profile money", Toast.LENGTH_SHORT).show();
             }
         });
+
+
 
         getProfileImgDataReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -186,6 +190,7 @@ public class ProfileFragment extends Fragment {
         player_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              //  Toast.makeText(getContext(), "money" + money, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), Recharge.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
