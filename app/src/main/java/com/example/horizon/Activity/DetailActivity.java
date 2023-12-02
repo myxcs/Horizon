@@ -89,7 +89,7 @@ public class DetailActivity extends AppCompatActivity {
            }
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
-               Toast.makeText(DetailActivity.this, "Error to get money", Toast.LENGTH_SHORT).show();
+               Toast.makeText(DetailActivity.this, "Error to get money " + money, Toast.LENGTH_SHORT).show();
 
            }
        });
@@ -117,16 +117,38 @@ public class DetailActivity extends AppCompatActivity {
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(moneyRaw>= popularModel.getPrice()){
-                    addedToCart();
-                    Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    finish();
-                    startActivity(intent);
+
+                if(popularModel!=null){
+
+                    if(moneyRaw>= popularModel.getPrice()){
+
+                        addedToCart();
+                        Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else if (newGamesModel!=null){
+                     if (moneyRaw>= newGamesModel.getPrice()){
+                        addedToCart();
+                        Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
+                    }
                 }
                 else{
-                    Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetailActivity.this, "Error to buy", Toast.LENGTH_SHORT).show();
                 }
+
+
 
             }
         });
@@ -138,17 +160,16 @@ public class DetailActivity extends AppCompatActivity {
             detailDescription.setText(popularModel.getDescription());
             detailStorage.setText(popularModel.getStorage());
         }
-        else {
-            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
-        }
-
-        //String img_url = newGamesModel.getImg_url();
-        if (newGamesModel != null) {
+        else if (newGamesModel != null) {
             Glide.with(getApplicationContext()).load(newGamesModel.getImg_url()).into(detailImg);
             detailName.setText(newGamesModel.getName());
             detailDescription.setText(newGamesModel.getDescription());
             detailStorage.setText(newGamesModel.getStorage());
         }
+        else {
+            Toast.makeText(this, "Error to show game", Toast.LENGTH_SHORT).show();
+        }
+
 
 //phím back, thi thoảng lỗi
         back = findViewById(R.id.back_button);
@@ -180,26 +201,54 @@ public class DetailActivity extends AppCompatActivity {
 
         //them vao cart
         //hell nah sau cả buôi tôi cũng fix đc cái user money, bây h là 5 giờ sáng, tôi hối hận
-        final HashMap<String, Object> cartMap = new HashMap<>();
-        cartMap.put("productName", popularModel.getName());
-        cartMap.put("userMail", auth.getCurrentUser().getEmail());
-        cartMap.put("userMoney", money);
-        cartMap.put("productPrice", popularModel.getPrice());
-        cartMap.put("Downloaded", popularModel.getDownloaded()+1);
-        cartMap.put("currentDate", saveCurrentDate);
-        cartMap.put("currentTime", saveCurrentTime);
+
+        if(popularModel!=null){
+            final HashMap<String, Object> cartMap = new HashMap<>();
+            cartMap.put("productName", popularModel.getName());
+            cartMap.put("userMail", auth.getCurrentUser().getEmail());
+            cartMap.put("userMoney", money);
+             cartMap.put("productPrice", popularModel.getPrice());
+            cartMap.put("Downloaded", popularModel.getDownloaded()+1);
+            cartMap.put("currentDate", saveCurrentDate);
+            cartMap.put("currentTime", saveCurrentTime);
+
+            firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
+                    .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else if(newGamesModel!=null){
+            final HashMap<String, Object> cartMap = new HashMap<>();
+            cartMap.put("productName", newGamesModel.getName());
+            cartMap.put("userMail", auth.getCurrentUser().getEmail());
+            cartMap.put("userMoney", money);
+            cartMap.put("productPrice", newGamesModel.getPrice());
+            cartMap.put("Downloaded", newGamesModel.getDownloaded()+1);
+            cartMap.put("currentDate", saveCurrentDate);
+            cartMap.put("currentTime", saveCurrentTime);
+
+            firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
+                    .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+        else {
+            Toast.makeText(this, "Error popular or new is null", Toast.LENGTH_SHORT).show();
+        }
+
 
 //        cartMap.put("productImage", newGamesModel.getImg_url());
 //        cartMap.put("productPrice", newGamesModel.getPrice());
 //        cartMap.put("Downloaded", newGamesModel.getDownloaded()+1);
 
-        firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
-        .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
 
-            @Override
-            public void onComplete(@NonNull Task<DocumentReference> task) {
-                Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
