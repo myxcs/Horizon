@@ -182,13 +182,30 @@
                 android:layout_height="wrap_content"
                 android:text="Dung lượng"
                 android:textStyle="bold"
-                android:layout_margin="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 />
             <TextView
                 android:id="@+id/storage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="dung lượng:"
+                android:layout_marginStart="20dp"
+                />
+            <TextView
+                android:id="@+id/gia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Giá:"
+                android:textStyle="bold"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
+                />
+            <TextView
+                android:id="@+id/price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="giá"
                 android:layout_marginStart="20dp"
                 />
 

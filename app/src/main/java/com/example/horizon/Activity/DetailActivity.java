@@ -43,6 +43,7 @@ public class DetailActivity extends AppCompatActivity {
      TextView detailName;
      TextView detailDescription;
      TextView detailStorage;
+     TextView detailPrice;
      PopularModel popularModel =null;
      NewGamesModel newGamesModel = null;
 
@@ -62,7 +63,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        pass ảnh game
+//        pass data  game
         final Object object = getIntent().getSerializableExtra("object");
         if (object instanceof PopularModel) {
             popularModel = (PopularModel) object;
@@ -104,6 +105,7 @@ public class DetailActivity extends AppCompatActivity {
         detailName = findViewById(R.id.game_name);
         detailDescription = findViewById(R.id.description);
         detailStorage = findViewById(R.id.storage);
+        detailPrice = findViewById(R.id.price);
         addToCart = findViewById(R.id.buy_button);
 
 
@@ -159,12 +161,14 @@ public class DetailActivity extends AppCompatActivity {
             detailName.setText(popularModel.getName());
             detailDescription.setText(popularModel.getDescription());
             detailStorage.setText(popularModel.getStorage());
+            detailPrice.setText(popularModel.getPrice() + "$");
         }
         else if (newGamesModel != null) {
             Glide.with(getApplicationContext()).load(newGamesModel.getImg_url()).into(detailImg);
             detailName.setText(newGamesModel.getName());
             detailDescription.setText(newGamesModel.getDescription());
             detailStorage.setText(newGamesModel.getStorage());
+            detailPrice.setText(newGamesModel.getPrice() + "$");
         }
         else {
             Toast.makeText(this, "Error to show game", Toast.LENGTH_SHORT).show();
