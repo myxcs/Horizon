@@ -45,9 +45,10 @@ public class NewGamesAdapter extends RecyclerView.Adapter<NewGamesAdapter.ViewHo
 
         Glide.with(context).load(newGamesModelsList.get(position).getImg_url()).into(holder.pics);
         holder.name.setText(newGamesModelsList.get(position).getName());
+        //holder.price.setText(newGamesModelsList.get(position).getPrice());
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(holder.itemView.getContext(), DetailActivity.class);
-            intent.putExtra("newGame", newGamesModelsList.get(position));
+            intent.putExtra("object2", newGamesModelsList.get(position));
             context.startActivity(intent);
         });
     }
@@ -63,13 +64,13 @@ public class NewGamesAdapter extends RecyclerView.Adapter<NewGamesAdapter.ViewHo
         ImageView pics;
         TextView name;
 
-        TextView gia;
+        TextView price;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             pics = itemView.findViewById(R.id.game_pics);
             name = itemView.findViewById(R.id.game_name);
-            gia = itemView.findViewById(R.id.game_price);
+          //  price = itemView.findViewById(R.id.game_price);
 
         }
     }

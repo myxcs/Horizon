@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.horizon.Fragment.ProfileFragment;
@@ -20,18 +21,31 @@ import com.example.horizon.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChangeProfile extends AppCompatActivity {
    private ImageView back_button;
     private Button button_change_name;
 
     private FirebaseAuth auth;
-    private FirebaseDatabase database;
+
     private DatabaseReference reference;
-    UserModel userModel;
-
-
+    private FirebaseFirestore db;
+    private UserModel userModel;
     EditText change_name;
+
+
+
+
+    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+    FirebaseStorage storage;
+
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+    DatabaseReference getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
 
 
     @Override
@@ -63,6 +77,7 @@ public class ChangeProfile extends AppCompatActivity {
                     Toast.makeText(ChangeProfile.this,"Vui lòng nhập tên", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    reference.child(FirebaseAuth.getInstance().getUid()).child("name").setValue(name);
                     Toast.makeText(ChangeProfile.this,"Đổi tên thành công", Toast.LENGTH_SHORT).show();
                 }
 

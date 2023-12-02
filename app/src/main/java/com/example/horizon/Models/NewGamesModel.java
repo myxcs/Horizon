@@ -8,23 +8,24 @@ public class NewGamesModel implements Serializable {
     String name;
     String img_url;
     String description;
-    String dungluong;
+    String storage;
+    int downloaded;
+    int genre;
+    int price;
 
-    int gia;
-     int maloai;
-     int soluongtai;
+
 
     public NewGamesModel() {
     }
 
-    public NewGamesModel(String name, String img_url, String description, String dungluong, int gia, int maloai, int soluongtai) {
+    public NewGamesModel(String name, String img_url, String description, String storage, int downloaded, int genre, int price) {
         this.name = name;
         this.img_url = img_url;
         this.description = description;
-        this.dungluong = dungluong;
-        this.gia= gia;
-        this.maloai = maloai;
-        this.soluongtai = soluongtai;
+        this.storage = storage;
+        this.downloaded = downloaded;
+        this.genre = genre;
+        this.price = price;
     }
 
     public String getName() {
@@ -51,35 +52,35 @@ public class NewGamesModel implements Serializable {
         this.description = description;
     }
 
-    public String getDungluong() {
-        return dungluong;
+    public String getStorage() {
+        return storage;
     }
 
-    public void setDungluong(String dungluong) {
-        this.dungluong = dungluong;
+    public void setStorage(String storage) {
+        this.storage = storage;
     }
 
-    public int getGia() {
-        return gia;
+    public int getDownloaded() {
+        return downloaded;
     }
 
-    public void setGia(int gia) {
-        this.gia = gia;
+    public void setDownloaded(int downloaded) {
+        this.downloaded = downloaded;
     }
 
-    public int getMaloai() {
-        return maloai;
+    public int getGenre() {
+        return genre;
     }
 
-    public void setMaloai(int maloai) {
-        this.maloai = maloai;
+    public void setGenre(int genre) {
+        this.genre = genre;
     }
 
-    public int getSoluongtai() {
-        return soluongtai;
+    public int getPrice() {
+        return price;
     }
 
-    public void setSoluongtai(int soluongtai) {
-        this.soluongtai = soluongtai;
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

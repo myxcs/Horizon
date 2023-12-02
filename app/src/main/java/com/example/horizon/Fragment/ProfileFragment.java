@@ -55,12 +55,12 @@ public class ProfileFragment extends Fragment {
 
     private String money;
     private TextView player_money;
-    private EditText player_name;
+    private TextView player_name;
     CircleImageView profileImg;
     private UserModel userModel;
     Button update;
     private Button logout;
-    private FirebaseAuth auth;
+  private   FirebaseAuth auth;
     private FirebaseFirestore db;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
@@ -86,13 +86,14 @@ public class ProfileFragment extends Fragment {
         player_money = view.findViewById(R.id.player_money);
         player_name = view.findViewById(R.id.player_name);
         profileImg = view.findViewById(R.id.profile_img);
-        update = view.findViewById(R.id.update);
         logout = view.findViewById(R.id.logout_button);
 
 
+        //make some change here, remember it
         storage = FirebaseStorage.getInstance();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        database = FirebaseDatabase.getInstance();
 
 
 
@@ -222,19 +223,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              updateUserProfile();
-            }
-        });
+//        update.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//              updateUserProfile();
+//            }
+//        });
         return view;
     }
 
-    private void updateUserProfile() {
-
-
-    }
+//    private void updateUserProfile() {
+//
+//
+//    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -257,8 +258,8 @@ public class ProfileFragment extends Fragment {
                             database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("profileImg").setValue(uri.toString());
                             Toast.makeText(getContext(), "Profile Picture Updated", Toast.LENGTH_SHORT).show();
                         }
-                    });
 
+                    });
                     //to upload the image in the database, i dont suppose to do this sh*t, make it quick i need to sleep
                 }
             });

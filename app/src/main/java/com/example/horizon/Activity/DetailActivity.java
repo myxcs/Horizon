@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.horizon.Models.NewGamesModel;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.Models.UserModel;
 import com.example.horizon.R;
@@ -26,6 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -42,6 +44,7 @@ public class DetailActivity extends AppCompatActivity {
      TextView detailDescription;
      TextView detailStorage;
      PopularModel popularModel =null;
+     NewGamesModel newGamesModel = null;
 
      UserModel userModel=null;
 
@@ -63,6 +66,10 @@ public class DetailActivity extends AppCompatActivity {
         final Object object = getIntent().getSerializableExtra("object");
         if (object instanceof PopularModel) {
             popularModel = (PopularModel) object;
+        }
+        final Object object2 = getIntent().getSerializableExtra("object2");
+        if (object2 instanceof NewGamesModel) {
+            newGamesModel = (NewGamesModel) object2;
         }
 
        getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
@@ -99,6 +106,9 @@ public class DetailActivity extends AppCompatActivity {
         detailStorage = findViewById(R.id.storage);
         addToCart = findViewById(R.id.buy_button);
 
+
+
+
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
@@ -130,6 +140,14 @@ public class DetailActivity extends AppCompatActivity {
         }
         else {
             Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+        //String img_url = newGamesModel.getImg_url();
+        if (newGamesModel != null) {
+            Glide.with(getApplicationContext()).load(newGamesModel.getImg_url()).into(detailImg);
+            detailName.setText(newGamesModel.getName());
+            detailDescription.setText(newGamesModel.getDescription());
+            detailStorage.setText(newGamesModel.getStorage());
         }
 
 //phím back, thi thoảng lỗi
@@ -170,6 +188,10 @@ public class DetailActivity extends AppCompatActivity {
         cartMap.put("Downloaded", popularModel.getDownloaded()+1);
         cartMap.put("currentDate", saveCurrentDate);
         cartMap.put("currentTime", saveCurrentTime);
+
+//        cartMap.put("productImage", newGamesModel.getImg_url());
+//        cartMap.put("productPrice", newGamesModel.getPrice());
+//        cartMap.put("Downloaded", newGamesModel.getDownloaded()+1);
 
         firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
         .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

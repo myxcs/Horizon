@@ -130,17 +130,14 @@ public class MainActivity extends AppCompatActivity {
 
         //new games
 
-        db.collection("games")
+        db.collection("NewGames")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-//                                PopularModel popularModel = document.toObject(PopularModel.class);
-//                                popularModelsList.add(popularModel);
-//                                popularAdapters.notifyDataSetChanged();
-//                                loading1.setVisibility(View.GONE);
+
                                 NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
                                 newGamesModelsList.add(newGamesModel);
                                 newGamesAdapter.notifyDataSetChanged();

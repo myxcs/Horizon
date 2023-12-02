@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/game_pics"
                 android:src="@drawable/game_sample"
-                android:layout_width="50dp"
+                android:layout_width="133dp"
                 android:layout_height="50dp"/>
 
             <LinearLayout
@@ -41,14 +41,14 @@
                     android:textStyle="bold"
                     android:layout_marginBottom="5dp"
                     />
-                <TextView
-                    android:id="@+id/game_price"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="giá"
-                    android:textSize="10dp"
-                    android:textStyle="italic"
-                    />
+<!--                <TextView-->
+<!--                    android:id="@+id/game_price"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="giá"-->
+<!--                    android:textSize="10dp"-->
+<!--                    android:textStyle="italic"-->
+<!--                    />-->
             </LinearLayout>
 
         </LinearLayout>
