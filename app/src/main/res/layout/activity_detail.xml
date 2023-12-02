@@ -166,6 +166,7 @@
                     android:layout_marginTop="30dp"
                     android:text="Phần giới thiệu:"
                     android:textStyle="bold"
+                    android:textSize="20sp"
                     />
             </LinearLayout>
 
@@ -174,7 +175,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="description"
-                android:layout_margin="20dp"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="10dp"
                 />
             <TextView
                 android:id="@+id/storage_0"
@@ -183,12 +186,14 @@
                 android:text="Dung lượng"
                 android:textStyle="bold"
                 android:layout_marginStart="20dp"
+                android:textSize="20sp"
                 android:layout_marginTop="10dp"
                 />
             <TextView
                 android:id="@+id/storage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="20sp"
                 android:text="dung lượng:"
                 android:layout_marginStart="20dp"
                 />
@@ -198,6 +203,7 @@
                 android:layout_height="wrap_content"
                 android:text="Giá:"
                 android:textStyle="bold"
+                android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="10dp"
                 />
@@ -206,6 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="giá"
+                android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 />
 

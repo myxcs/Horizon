@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="@drawable/backgroud"
     tools:context=".Activity.BuyConfirm">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -30,48 +31,28 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/buy_confirm" />
+                app:srcCompat="@drawable/failed" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayout"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="24dp"
-                android:layout_marginTop="24dp"
-                android:background="@drawable/circle_background_white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/back_button"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/back" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xác nhận mua"
+                android:text="Mua không thành công"
                 android:textSize="30sp"
+                android:paddingTop="24dp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
+                app:layout_constraintStart_toStartOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/player_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Xác nhận thanh toán"
+            android:text="Thanh toán không thành công!"
             android:textAlignment="center"
             android:textStyle="bold"
             android:textSize="25sp"
@@ -84,14 +65,14 @@
             android:text="Số dư tài khoản"
             android:textAlignment="center"
             android:textStyle="italic"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textColor="#E91E63"
             android:layout_marginTop="10dp"/>
         <Button
             android:id="@+id/buy_button"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Mua ngay"
+            android:text="Trang chủ"
             android:layout_gravity="center_horizontal"
             android:background="@drawable/button_background"
             android:textAlignment="center"
@@ -107,7 +88,7 @@
             android:text="Số dư không đủ? Nạp ngay!"
             android:textAlignment="center"
             android:textStyle="italic"
-            android:textSize="15sp"
+            android:textSize="20sp"
             android:textColor="#E91E63"
             android:layout_marginTop="50dp"/>
 

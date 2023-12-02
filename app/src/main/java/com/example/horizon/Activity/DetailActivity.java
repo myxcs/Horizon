@@ -131,6 +131,10 @@ public class DetailActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else{
+                        Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
                         Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -143,6 +147,10 @@ public class DetailActivity extends AppCompatActivity {
                         startActivity(intent);
                     }
                     else{
+                        Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
                         Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
                     }
                 }

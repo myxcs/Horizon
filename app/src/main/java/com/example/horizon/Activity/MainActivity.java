@@ -10,23 +10,20 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 //import com.example.horizon.Adapters.GamesListAdapter;
 import com.example.horizon.Adapters.NewGamesAdapter;
 import com.example.horizon.Adapters.PopularAdapters;
 import com.example.horizon.Adapters.SliderAdapters;
-import com.example.horizon.Domian.ListGame;
 import com.example.horizon.Domian.SliderItems;
 import com.example.horizon.Fragment.HomeFragment;
 import com.example.horizon.Fragment.NotificationFragment;
@@ -39,10 +36,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView popularGames;
     RecyclerView newGames;
+
+//    EditText search_box;
+//    private RecyclerView recyclerViewSearch;
+
+
     List<PopularModel> popularModelsList;
     List<NewGamesModel> newGamesModelsList;
 
@@ -85,8 +87,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    auth = FirebaseAuth.getInstance();
-    db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         //popular games recycler
         popularGames = findViewById(R.id.view1);
@@ -103,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         newGames.setAdapter(newGamesAdapter);
 
 
-
         //read firestore
         //should not like this bro, but these no faking data, forgive me
 
@@ -115,17 +116,16 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                               PopularModel popularModel = document.toObject(PopularModel.class);
-                               popularModelsList.add(popularModel);
-                               popularAdapters.notifyDataSetChanged();
-                               loading1.setVisibility(View.GONE);
+                                PopularModel popularModel = document.toObject(PopularModel.class);
+                                popularModelsList.add(popularModel);
+                                popularAdapters.notifyDataSetChanged();
+                                loading1.setVisibility(View.GONE);
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Error "+ task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
 
 
         //new games
@@ -144,39 +144,67 @@ public class MainActivity extends AppCompatActivity {
                                 loading2.setVisibility(View.GONE);
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Error "+ task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
 
 
 //navigation
-    bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-    bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected( MenuItem item) {
-            int itemId = item.getItemId();
-            if (itemId == R.id.nav_home) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
-                return true;
-            } else if (itemId == R.id.nav_notification) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationFragment).commit();
-                return true;
-            } else if (itemId == R.id.nav_profile) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
-                return true;
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int itemId = item.getItemId();
+                if (itemId == R.id.nav_home) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                    return true;
+                } else if (itemId == R.id.nav_notification) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, notificationFragment).commit();
+                    return true;
+                } else if (itemId == R.id.nav_profile) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.container, profileFragment).commit();
+                    return true;
+                }
+                return false;
             }
-            return false;
-        }
-    });
+        });
 
-initView();
-banner();
+        initView();
+        banner();
 //sendRequest();
 
-}
+        //Search view
+//        recyclerViewSearch = findViewById(R.id.search_rec);
+//        search_box = findViewById(R.id.search_box);
+//        newGamesModelsList = new ArrayList<>();
+//        newGamesAdapter = new NewGamesAdapter(this, newGamesModelsList);
+//        recyclerViewSearch.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerViewSearch.setAdapter(adapterNewGames);
+//        recyclerViewSearch.setHasFixedSize(true);
+//        search_box.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//                if (s.toString().isEmpty()) {
+//                    newGamesModelsList.clear();
+//                    newGamesAdapter.notifyDataSetChanged();
+//                } else {
+//                    searchProduct(s.toString());
+//                }
+//            }
+//        });
+    }
 
 //    private void sendRequest() {
 //        mRequestQueue = Volley.newRequestQueue(this);
@@ -266,4 +294,26 @@ banner();
         loading2 = findViewById(R.id.progressBar2);
 //        loading3 = findViewById(R.id.progressBar3);
     }
+
+
+//    private void searchProduct(String type) {
+//        if(!type.isEmpty()) {
+//           db.collection("NewGames").whereEqualTo("name", type)
+//                   .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                       @Override
+//                       public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                           if (task.isSuccessful() && task.getResult() != null) {
+//                               newGamesModelsList.clear();
+//                               newGamesAdapter.notifyDataSetChanged();
+//                               for (DocumentSnapshot document : task.getResult().getDocuments()) {
+//                                   NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
+//                                   newGamesModelsList.add(newGamesModel);
+//                                   newGamesAdapter.notifyDataSetChanged();
+//                               }
+//
+//                           }
+//                       }
+//                   });
+//        }
+//    }
 }

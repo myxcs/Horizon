@@ -33,7 +33,7 @@
                     android:orientation="vertical">
 
                     <EditText
-                        android:id="@+id/search_bar"
+                        android:id="@+id/search_box"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_margin="16dp"
@@ -46,6 +46,13 @@
                         android:padding="12dp"
                         android:textColor="@color/black"
                         android:textColorHint="@color/black" />
+
+<!--                    <androidx.recyclerview.widget.RecyclerView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:id="@+id/search_rec"-->
+<!--                        android:layout_marginLeft="10dp"-->
+<!--                        android:layout_marginRight="10dp"/>-->
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
