@@ -96,6 +96,30 @@
                     android:textColor="#E91E63"
                     android:layout_marginTop="20dp"/>
 
+            <TextView
+                android:id="@+id/player_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="email"
+                android:textAlignment="center"
+                android:textStyle="italic"
+                android:textSize="20sp"
+                android:textColor="@color/grey"
+                android:layout_marginTop="20dp"/>
+
+            <TextView
+                android:id="@+id/player_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Đổi mật khẩu"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="@color/teal_700"
+                android:layout_marginTop="20dp"/>
+
+
+
         </LinearLayout>
 
     <Button

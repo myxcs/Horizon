@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.horizon.Activity.ChangeMail;
+import com.example.horizon.Activity.ChangePass;
 import com.example.horizon.Activity.ChangeProfile;
 import com.example.horizon.Activity.LoginActivity;
 import com.example.horizon.Activity.MainActivity;
@@ -56,6 +58,8 @@ public class ProfileFragment extends Fragment {
     private String money;
     private TextView player_money;
     private TextView player_name;
+    private TextView player_email;
+    private TextView player_password;
     CircleImageView profileImg;
     private UserModel userModel;
     Button update;
@@ -73,6 +77,8 @@ public class ProfileFragment extends Fragment {
 
     DatabaseReference getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
 
+    DatabaseReference getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -85,6 +91,8 @@ public class ProfileFragment extends Fragment {
         back_button = view.findViewById(R.id.back_button);
         player_money = view.findViewById(R.id.player_money);
         player_name = view.findViewById(R.id.player_name);
+        player_email = view.findViewById(R.id.player_email);
+        player_password = view.findViewById(R.id.player_password);
         profileImg = view.findViewById(R.id.profile_img);
         logout = view.findViewById(R.id.logout_button);
 
@@ -180,6 +188,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        getEmailDataReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                String text = dataSnapshot.getValue(String.class);
+                player_email.setText("Email: " + text);
+                //player_money.setHint();
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                  Toast.makeText(getContext(), "Error to show profile email", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,6 +223,23 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChangeProfile.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+
+        player_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangeMail.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+        });
+        player_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ChangePass.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
