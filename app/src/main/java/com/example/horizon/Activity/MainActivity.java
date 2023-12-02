@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
         //new games
 
-        db.collection("NewGames")
+        db.collection("games")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

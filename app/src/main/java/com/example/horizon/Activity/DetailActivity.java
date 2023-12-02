@@ -124,6 +124,8 @@ public class DetailActivity extends AppCompatActivity {
 
                     if(moneyRaw>= popularModel.getPrice()){
 
+                        moneyRaw = moneyRaw - popularModel.getPrice();
+                        getGetMoneyDataReference.setValue(moneyRaw);
                         addedToCart();
                         Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -136,6 +138,8 @@ public class DetailActivity extends AppCompatActivity {
                 }
                 else if (newGamesModel!=null){
                      if (moneyRaw>= newGamesModel.getPrice()){
+                         moneyRaw = moneyRaw - newGamesModel.getPrice();
+                         getGetMoneyDataReference.setValue(moneyRaw);
                         addedToCart();
                         Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
