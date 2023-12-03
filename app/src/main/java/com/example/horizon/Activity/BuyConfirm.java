@@ -39,6 +39,7 @@ public class BuyConfirm extends AppCompatActivity {
         recharge = findViewById(R.id.button_recharge);
         playerMoney = findViewById(R.id.player_money);
 
+        //this is for back to main button, to lazy to change it name
         buyConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,6 +49,8 @@ public class BuyConfirm extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // this is for recharge activity
         recharge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,6 +60,8 @@ public class BuyConfirm extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        //to show player money
         getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {

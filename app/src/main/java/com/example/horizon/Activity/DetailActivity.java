@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 public class DetailActivity extends AppCompatActivity {
 
-    private ImageView back;
+     private ImageView back;
 
      private String money;
      private int moneyRaw;
@@ -51,19 +51,17 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
-    FirebaseFirestore firestore;
+     FirebaseFirestore firestore;
+     FirebaseDatabase database = FirebaseDatabase.getInstance();
+     DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+     FirebaseAuth auth;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-    DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
-
-    FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-//        pass data  game
+         // tạo một oject lưu v truyền dữ liệu
         final Object object = getIntent().getSerializableExtra("object");
         if (object instanceof PopularModel) {
             popularModel = (PopularModel) object;
@@ -73,6 +71,7 @@ public class DetailActivity extends AppCompatActivity {
             newGamesModel = (NewGamesModel) object2;
         }
 
+        // lấy số tiền hiện tại của người dùng
        getGetMoneyDataReference.addValueEventListener(new ValueEventListener() {
            @Override
            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -91,13 +90,8 @@ public class DetailActivity extends AppCompatActivity {
            @Override
            public void onCancelled(@NonNull DatabaseError error) {
                Toast.makeText(DetailActivity.this, "Error to get money " + money, Toast.LENGTH_SHORT).show();
-
            }
        });
-
-
-
-
 
 
         //activity to activity
@@ -107,15 +101,13 @@ public class DetailActivity extends AppCompatActivity {
         detailStorage = findViewById(R.id.storage);
         detailPrice = findViewById(R.id.price);
         addToCart = findViewById(R.id.buy_button);
-
-
-
+        back = findViewById(R.id.back_button);
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
 
-        //mua
+        //xử lí phím mua
         addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -161,13 +153,11 @@ public class DetailActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(DetailActivity.this, "Error to buy", Toast.LENGTH_SHORT).show();
                 }
-
-
-
+          //đoạn code này không hiểu sao lại hoạt động khá tốt, vẫn còn nhiều ngoại lệ và lỗi cần xử lí =)))
             }
         });
 
-       // String img_url = popularModel.getImg_url();
+       // truyền dữ liệu từ model để hiển thị trong detail
         if (popularModel != null) {
             Glide.with(getApplicationContext()).load(popularModel.getImg_url()).into(detailImg);
             detailName.setText(popularModel.getName());
@@ -187,8 +177,7 @@ public class DetailActivity extends AppCompatActivity {
         }
 
 
-//phím back, thi thoảng lỗi
-        back = findViewById(R.id.back_button);
+        //phím back, thi thoảng lỗi
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -196,14 +185,14 @@ public class DetailActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 finish();
                 startActivity(intent);
-
             }
         });
-        }
-        //đưa thông tin mua hàng lên firestore
+    }
+
+        //đưa thông tin mua hàng lên phần added to cart firestore
     private void addedToCart() {
 
-//lấy thời gian
+        //lấy thời gian
         String saveCurrentDate, saveCurrentTime;
         Calendar calForDate = Calendar.getInstance();
 
@@ -213,17 +202,15 @@ public class DetailActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calForDate.getTime());
 
-
-
         //them vao cart
-        //hell nah sau cả buôi tôi cũng fix đc cái user money, bây h là 5 giờ sáng, tôi hối hận
+        //hell nah sau cả buổi tối cũng fix đc cái user money, bây h là 5 giờ sáng, tôi hối hận
 
         if(popularModel!=null){
             final HashMap<String, Object> cartMap = new HashMap<>();
             cartMap.put("productName", popularModel.getName());
             cartMap.put("userMail", auth.getCurrentUser().getEmail());
             cartMap.put("userMoney", money);
-             cartMap.put("productPrice", popularModel.getPrice());
+            cartMap.put("productPrice", popularModel.getPrice());
             cartMap.put("Downloaded", popularModel.getDownloaded()+1);
             cartMap.put("currentDate", saveCurrentDate);
             cartMap.put("currentTime", saveCurrentTime);
@@ -259,12 +246,6 @@ public class DetailActivity extends AppCompatActivity {
         else {
             Toast.makeText(this, "Error popular or new is null", Toast.LENGTH_SHORT).show();
         }
-
-
-//        cartMap.put("productImage", newGamesModel.getImg_url());
-//        cartMap.put("productPrice", newGamesModel.getPrice());
-//        cartMap.put("Downloaded", newGamesModel.getDownloaded()+1);
-
-
+        // phần downloaded bị sai nhưng vẫn chưa nghĩ ra cách sửa
     }
 }

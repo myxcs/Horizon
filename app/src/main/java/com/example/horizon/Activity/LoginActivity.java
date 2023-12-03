@@ -30,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private CheckBox rememberMe;
     private Button loginBtn;
     private TextView signupRedirectText;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +44,7 @@ public class LoginActivity extends AppCompatActivity {
         rememberMe = findViewById(R.id.checkbox);
         loginBtn = findViewById(R.id.login_button);
         signupRedirectText = findViewById(R.id.signup_re_button);
+
 
         SharedPreferences sharedPreferences = getSharedPreferences("checkbox",MODE_PRIVATE);
         String checkbox = sharedPreferences.getString("remember","");
