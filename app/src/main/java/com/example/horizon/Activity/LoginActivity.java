@@ -131,6 +131,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //check ban status
     private void checkBanStatus() {
+        //check thử có tk sẵn không
         try {
             final DatabaseReference getBanStatus = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
             getBanStatus.addValueEventListener(new ValueEventListener() {
@@ -161,7 +162,5 @@ public class LoginActivity extends AppCompatActivity {
         {
             Toast.makeText(LoginActivity.this, "Không có tài khoản đăng nhập", Toast.LENGTH_SHORT).show();
         }
-
-
     }
 }

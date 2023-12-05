@@ -33,6 +33,7 @@ import com.example.horizon.Activity.Recharge;
 import com.example.horizon.Models.UserModel;
 import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Firebase;
@@ -246,15 +247,21 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                auth.signOut();
-                SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putBoolean("rememberMe", false);
-                editor.apply();
-                editor.commit();
-                Intent intent = new Intent(getContext(), LoginActivity.class);
-                getActivity().finish();
-                Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+                try {
+                    auth.signOut();
+                    SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("rememberMe", false);
+                    editor.apply();
+                    editor.commit();
+                    Intent intent = new Intent(getContext(), LoginActivity.class);
+                    getActivity().finish();
+                    Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+                }
+                catch (Exception e)
+                {
+                    Toast.makeText(getContext(), "Error to logout", Toast.LENGTH_SHORT).show();
+                }
                 //this shit is not working sometime and i dont know why
             }
         });
@@ -294,9 +301,18 @@ public class ProfileFragment extends Fragment {
                             database.getReference().child("Users").child(FirebaseAuth.getInstance().getUid()).child("profileImg").setValue(uri.toString());
                             Toast.makeText(getContext(), "Profile Picture Updated", Toast.LENGTH_SHORT).show();
                         }
-
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getContext(), "Error to update profile picture", Toast.LENGTH_SHORT).show();
+                        }
                     });
                     //to upload the image in the database, i dont suppose to do this sh*t, make it quick i need to sleep
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Toast.makeText(getContext(), "Error to update profile", Toast.LENGTH_SHORT).show();
                 }
             });
 
