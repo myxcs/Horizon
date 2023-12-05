@@ -8,6 +8,7 @@ import com.example.horizon.R;
 
 public class ProfileActivity extends AppCompatActivity {
 
+    // Không dùng tới xóa cũng chẳng sao, ứng dụng như tên
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

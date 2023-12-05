@@ -64,19 +64,16 @@ public class ProfileFragment extends Fragment {
     private UserModel userModel;
     Button update;
     private Button logout;
-  private   FirebaseAuth auth;
+    private   FirebaseAuth auth;
     private FirebaseFirestore db;
 
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     FirebaseStorage storage;
-
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     DatabaseReference getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
     DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
-
     DatabaseReference getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
-
     DatabaseReference getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
 
 
@@ -245,6 +242,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //nút logout này có lỗi nhưng ko biết fix =))
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -261,12 +259,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        //tính ra là định cho nút update nằm ở profile luôn
 //        update.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //              updateUserProfile();
 //            }
 //        });
+
         return view;
     }
 

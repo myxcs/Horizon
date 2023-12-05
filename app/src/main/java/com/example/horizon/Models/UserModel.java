@@ -12,19 +12,19 @@ public class UserModel implements Serializable {
     String profileImg;
     int money;
 
-    int moneyRecharge;
+    boolean banStatus;
 
     public UserModel() {
 
     }
 
-    public UserModel(String name, String email, String password, String profileImg, int money, int moneyRecharge) {
+    public UserModel(String name, String email, String password, String profileImg, int money, boolean banStatus) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.profileImg = profileImg;
         this.money = money;
-        this.moneyRecharge = moneyRecharge;
+        this.banStatus = banStatus;
     }
 
     public String getName() {
@@ -67,12 +67,12 @@ public class UserModel implements Serializable {
         this.money = money;
     }
 
-    public int getMoneyRecharge() {
-        return moneyRecharge;
+    public boolean isBanStatus() {
+        return banStatus;
     }
 
-    public void setMoneyRecharge(int moneyRecharge) {
-        this.moneyRecharge = moneyRecharge;
+    public void setBanStatus(boolean banStatus) {
+        this.banStatus = banStatus;
     }
 }
 

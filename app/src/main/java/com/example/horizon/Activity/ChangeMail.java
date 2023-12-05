@@ -34,7 +34,6 @@ public class ChangeMail extends AppCompatActivity {
 
 
 
-
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     FirebaseStorage storage;
 

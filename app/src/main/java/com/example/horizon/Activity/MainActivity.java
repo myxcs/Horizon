@@ -49,13 +49,11 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView popularGames;
     RecyclerView newGames;
 
-//    EditText search_box;
-//    private RecyclerView recyclerViewSearch;
-
+    //EditText search_box;
+    //private RecyclerView recyclerViewSearch;
 
     List<PopularModel> popularModelsList;
     List<NewGamesModel> newGamesModelsList;
-
 
 
     FirebaseAuth auth;
@@ -76,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
     private PopularAdapters popularAdapters;
     private NewGamesAdapter newGamesAdapter;
 
-   // private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
+    //private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
     //private RecyclerView recyclerViewBestGames, recyclerViewUpcomingGames, recyclerViewCategory;
+
     private RequestQueue mRequestQueue;
     private StringRequest mStringRequest, mStringRequest2, mStringRequest3;
     private ProgressBar loading1, loading2, loading3;
@@ -107,7 +106,6 @@ public class MainActivity extends AppCompatActivity {
 
         //read firestore
         //should not like this bro, but these no faking data, forgive me
-
         //popular games
         db.collection("PopularGames")
                 .get()
@@ -129,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         //new games
-
-        db.collection("games")
+        db.collection("NewGames")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -150,9 +147,8 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-//navigation
+        //navigation, aka 3 cái nút dưới màn hình. đáng lí ra thì phải xử lí 3 cái fragment nhưng lại thành 1 activity 2 fragment =))
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-
         getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
@@ -174,9 +170,9 @@ public class MainActivity extends AppCompatActivity {
 
         initView();
         banner();
-//sendRequest();
+        //sendRequest();
 
-        //Search view
+        //Search view not working =))
 //        recyclerViewSearch = findViewById(R.id.search_rec);
 //        search_box = findViewById(R.id.search_box);
 //        newGamesModelsList = new ArrayList<>();
@@ -205,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
     }
-
+//  phần này sẽ lấy dữ liệu từ một link dạng json, nó thực sự không nên được dùng
 //    private void sendRequest() {
 //        mRequestQueue = Volley.newRequestQueue(this);
 //        loading1.setVisibility(View.VISIBLE);
@@ -223,10 +219,9 @@ public class MainActivity extends AppCompatActivity {
 //        mRequestQueue.add(mStringRequest);
 //    }
 
-    //popular games recycler
 
 
-
+    //thêm ảnh vào banner trong MainActivity. Là dữ liệu được fix cứng nên thực sự không đảm bảo. Nhưng nó trong khá đẹp btw, nên vẫn được giữ lại =))
     private void banner() {
         List<SliderItems> sliderItems = new ArrayList<>();
         sliderItems.add(new SliderItems(R.drawable.img_slider1));
@@ -257,24 +252,23 @@ public class MainActivity extends AppCompatActivity {
     public void onPageSelected(int position) {
         super.onPageSelected(position);
         sliderHandler.removeCallbacks(sliderRunnable);
-//        sliderHandler.postDelayed(sliderRunnable, 3000);
-    }
-});
+        // sliderHandler.postDelayed(sliderRunnable, 3000);
+          }
+     });
     }
 
+    // vẫn là phần kéo banner, nhiều code mà tác dụng chẳng bao nhiêu
     private Runnable sliderRunnable = new Runnable() {
         @Override
         public void run() {
             viewPager2.setCurrentItem(viewPager2.getCurrentItem() + 1);
         }
-    } ;
-
+    };
     @Override
     protected void onPause() {
         super.onPause();
         sliderHandler.removeCallbacks(sliderRunnable);
     }
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -282,20 +276,22 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
-
+        //đáng ra thì sẽ có rất nhiều recyclerView dữ liệu nhưng vì thời gian có hạn nên chỉ còn lại có 2 cái
         viewPager2 = findViewById(R.id.viewpages);
+        loading1 = findViewById(R.id.progressBar1);
+        loading2 = findViewById(R.id.progressBar2);
+    }
+
 //        recyclerViewBestGames = findViewById(R.id.view1);
 //        recyclerViewBestGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 //        recyclerViewUpcomingGames = findViewById(R.id.view2);
 //        recyclerViewUpcomingGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 //        recyclerViewCategory = findViewById(R.id.view3);
 //        recyclerViewCategory.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
-        loading1 = findViewById(R.id.progressBar1);
-        loading2 = findViewById(R.id.progressBar2);
 //        loading3 = findViewById(R.id.progressBar3);
-    }
 
 
+//phần tìm kiếm trong main, ko chạy và cũng lười fix
 //    private void searchProduct(String type) {
 //        if(!type.isEmpty()) {
 //           db.collection("NewGames").whereEqualTo("name", type)

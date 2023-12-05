@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 
 //import com.example.horizon.Adapters.GamesListAdapter;
 
-
+//đáng ra số code này được chạy
 public class HomeFragment extends Fragment {
 
 //    private ViewPager2 viewPager2;

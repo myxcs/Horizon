@@ -6,6 +6,8 @@ import android.os.Bundle;
 
 import com.example.horizon.R;
 
+//không dùng tới xóa cũng chẳng sao, ứng dụng như tên
+
 public class IntroscreenActivity extends AppCompatActivity {
 
     @Override

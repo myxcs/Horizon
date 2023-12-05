@@ -27,15 +27,14 @@ import com.google.firebase.database.ValueEventListener;
 public class SignupActivity extends AppCompatActivity {
 
     //tạo account
-
      private FirebaseAuth auth;
      private FirebaseDatabase database;
      private DatabaseReference reference;
-
      private UserModel userModel;
-    private EditText signupEmail, signupPassword, signupName;
-    private Button signupBtn;
-    private TextView loginRedirectText;
+
+     private EditText signupEmail, signupPassword, signupName;
+     private Button signupBtn;
+     private TextView loginRedirectText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +43,7 @@ public class SignupActivity extends AppCompatActivity {
         //database cho phần đăng kí
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-     //   reference = FirebaseDatabase.getInstance().getReference().child("Users");
+       //reference = FirebaseDatabase.getInstance().getReference().child("Users");
 
 
         signupName = findViewById(R.id.signup_name);
@@ -56,13 +55,13 @@ public class SignupActivity extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 createUser();
             }
         });
 
+        //chuyển qua signin
         loginRedirectText.setOnClickListener(new View.OnClickListener() {
-            //chuyển qua signin
+
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignupActivity.this, LoginActivity.class));
@@ -74,7 +73,6 @@ public class SignupActivity extends AppCompatActivity {
     private void createUser() {
 
         //tạo user
-
         String userMail = signupEmail.getText().toString();
         String userPass = signupPassword.getText().toString();
         String userName = signupName.getText().toString();
@@ -104,15 +102,16 @@ public class SignupActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                      //   set data user lên firebase
-                        UserModel userModel = new UserModel(userName, userMail, userPass,"https://firebasestorage.googleapis.com/v0/b/horizon-7a734.appspot.com/o/profile_picture%2F8Oj4GCgAuFdc121pAr6FeQAfpaH2?alt=media&token=94faf616-ee94-4a06-80a3-687fca8a15d5",0,0);
+                        UserModel userModel = new UserModel(userName, userMail, userPass,"https://firebasestorage.googleapis.com/v0/b/horizon-7a734.appspot.com/o/profile_picture%2F8Oj4GCgAuFdc121pAr6FeQAfpaH2?alt=media&token=94faf616-ee94-4a06-80a3-687fca8a15d5",0,false);
                         String id = task.getResult().getUser().getUid();
                         database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
 
-//                        reference.child("user").child(String.valueOf(id)).setValue(userModel);
+                        //để push dữ liệu từng cái một, khá thú vị nên để lại
+//                        reference.child("User").child(String.valueOf(id)).setValue(userModel);
 //                        reference.child("User").child(String.valueOf(userModel.getUserId())).setValue(userModel);
 //                        database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
-                          //push dữ liệu
 //                        reference.push().setValue(userModel);
+
                         Toast.makeText(SignupActivity.this, "Đăng kí thành công", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                     }
@@ -122,7 +121,5 @@ public class SignupActivity extends AppCompatActivity {
                 }
             });
         }
-
     }
-
 }

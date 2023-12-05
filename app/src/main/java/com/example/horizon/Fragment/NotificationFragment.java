@@ -34,21 +34,21 @@ public class NotificationFragment extends Fragment {
     // this should be cart fragment but i afraid if i change it to name cart fragment
     // it will not gonna work, so i just named it cart notification. Dont get wrong boi
 
- FirebaseAuth auth;
- FirebaseFirestore db;
+    FirebaseAuth auth;
+    FirebaseFirestore db;
 
-RecyclerView cartList;
+    RecyclerView cartList;
 
-List<MyCartModel> cartModelList;
+    List<MyCartModel> cartModelList;
 
 
-private MyCartAdapter cartAdapter;
+    private MyCartAdapter cartAdapter;
 
-private ImageView back_button;
+    private ImageView back_button;
 
-public void MyCartsFragment() {
-
-}
+    public void MyCartsFragment() {
+      //idk
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,7 +56,7 @@ public void MyCartsFragment() {
 
         View  view = inflater.inflate(R.layout.fragment_notification, container, false);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        //FirebaseAuth auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
@@ -72,7 +72,7 @@ public void MyCartsFragment() {
 
 
 
-
+        //tạo cart list hiện thị
         cartList = view.findViewById(R.id.cart_list);
         cartList.setLayoutManager(new LinearLayoutManager(getContext()));
         cartModelList = new ArrayList<>();
@@ -81,12 +81,11 @@ public void MyCartsFragment() {
 
         //no data happened again =/
 
-
+       //lấy dữ liệu từ database
        db.collection("addToCart").document(auth.getCurrentUser().getUid())
                .collection("CurrentUser").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                    @Override
                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
 
                        if(task.isSuccessful()){
                          for(DocumentSnapshot documentSnapshot : task.getResult().getDocuments()){
