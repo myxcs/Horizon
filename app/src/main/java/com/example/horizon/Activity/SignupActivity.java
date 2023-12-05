@@ -104,7 +104,7 @@ public class SignupActivity extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if(task.isSuccessful()) {
                      //   set data user lên firebase
-                        UserModel userModel = new UserModel(userName, userMail, userPass,"https://firebasestorage.googleapis.com/v0/b/horizon-7a734.appspot.com/o/profile_picture%2F8Oj4GCgAuFdc121pAr6FeQAfpaH2?alt=media&token=94faf616-ee94-4a06-80a3-687fca8a15d5",0);
+                        UserModel userModel = new UserModel(userName, userMail, userPass,"https://firebasestorage.googleapis.com/v0/b/horizon-7a734.appspot.com/o/profile_picture%2F8Oj4GCgAuFdc121pAr6FeQAfpaH2?alt=media&token=94faf616-ee94-4a06-80a3-687fca8a15d5",0,0);
                         String id = task.getResult().getUser().getUid();
                         database.getReference().child("Users").child(String.valueOf(id)).setValue(userModel);
 

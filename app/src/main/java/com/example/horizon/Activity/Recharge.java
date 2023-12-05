@@ -41,6 +41,7 @@ public class Recharge extends AppCompatActivity {
     private EditText recharge_code;
 
     private String money;
+    private String moneyRecharge;
 
     FirebaseAuth auth;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -51,6 +52,8 @@ public class Recharge extends AppCompatActivity {
     UserModel userModel;
 
     DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+    DatabaseReference getMoneyRechangeDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/moneyRecharge");
+
 
     FirebaseFirestore firestore;
   //  public TextView player_money;
@@ -65,6 +68,7 @@ public class Recharge extends AppCompatActivity {
 
         firestore = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
+        reference = FirebaseDatabase.getInstance().getReference().child("Users");
         //player_money = findViewById(R.id.player_money);
         back_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,6 +152,8 @@ public class Recharge extends AppCompatActivity {
                         Toast.makeText(Recharge.this, "Đã gửi yêu cầu nạp", Toast.LENGTH_SHORT).show();
                     }
                 });
+
+        reference.child(FirebaseAuth.getInstance().getUid()).child("moneyRecharge").setValue(Integer.parseInt(recharge_code.getText().toString()));
 
 
     }

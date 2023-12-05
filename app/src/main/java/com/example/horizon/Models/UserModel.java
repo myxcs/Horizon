@@ -12,32 +12,19 @@ public class UserModel implements Serializable {
     String profileImg;
     int money;
 
+    int moneyRecharge;
+
     public UserModel() {
 
     }
 
-    public UserModel(String name, String email, String password, String profileImg, int money) {
+    public UserModel(String name, String email, String password, String profileImg, int money, int moneyRecharge) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.profileImg = profileImg;
         this.money = money;
-    }
-//    public String getUid() {
-//        return uid;
-//    }
-//
-//    public void setUid(String uid) {
-//        this.uid = uid;
-//    }
-
-
-    public String getProfileImg() {
-        return profileImg;
-    }
-
-    public void setProfileImg(String profileImg) {
-        this.profileImg = profileImg;
+        this.moneyRecharge = moneyRecharge;
     }
 
     public String getName() {
@@ -45,7 +32,6 @@ public class UserModel implements Serializable {
     }
 
     public void setName(String name) {
-
         this.name = name;
     }
 
@@ -65,6 +51,14 @@ public class UserModel implements Serializable {
         this.password = password;
     }
 
+    public String getProfileImg() {
+        return profileImg;
+    }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
+
     public int getMoney() {
         return money;
     }
@@ -73,21 +67,12 @@ public class UserModel implements Serializable {
         this.money = money;
     }
 
-    //    public int getMoney() {
-//        return money;
-//    }
-//
-//    public void setMoney(int money) {
-//        this.money = money;
-//    }
+    public int getMoneyRecharge() {
+        return moneyRecharge;
+    }
 
-//    @Override
-//    public String toString() {
-//        return "UserModel{" +
-//                "name='" + name + '\'' +
-//                ", email='" + email + '\'' +
-//                ", password='" + password + '\'' +
-//                '}';
-//    }
+    public void setMoneyRecharge(int moneyRecharge) {
+        this.moneyRecharge = moneyRecharge;
+    }
 }
 
