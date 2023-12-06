@@ -17,6 +17,8 @@ import com.example.horizon.Models.PopularModel;
 import com.example.horizon.Models.UserModel;
 import com.example.horizon.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -24,8 +26,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
@@ -223,8 +228,10 @@ public class DetailActivity extends AppCompatActivity {
                             Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
                         }
                     });
+            addPopularGamesDownloadedData();
         }
         else if(newGamesModel!=null){
+
             final HashMap<String, Object> cartMap = new HashMap<>();
             cartMap.put("productName", newGamesModel.getName());
             cartMap.put("userMail", auth.getCurrentUser().getEmail());
@@ -242,10 +249,63 @@ public class DetailActivity extends AppCompatActivity {
                             Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
                         }
                     });
+            addNewGamesDownloadedData();
         }
         else {
             Toast.makeText(this, "Error popular or new is null", Toast.LENGTH_SHORT).show();
         }
         // phần downloaded bị sai nhưng vẫn chưa nghĩ ra cách sửa
+    }
+
+    //thêm dữ dữ liệu downloaded để thông kê cho phần popular games
+    private void addPopularGamesDownloadedData() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference popularGameRef = db.collection("PopularGames");
+
+        popularGameRef.whereEqualTo("name", popularModel.getName())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                PopularModel popularModel = document.toObject(PopularModel.class);
+                                popularModel.setDownloaded(popularModel.getDownloaded() + 1);
+                                popularGameRef.document(document.getId()).set(popularModel);
+                            }
+                        } else {
+                            Toast.makeText(DetailActivity.this, "Error to add", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    //phần new games
+    private void addNewGamesDownloadedData() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference newGameRef = db.collection("NewGames");
+
+        newGameRef.whereEqualTo("name", newGamesModel.getName())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
+                                newGamesModel.setDownloaded(newGamesModel.getDownloaded() + 1);
+                                newGameRef.document(document.getId()).set(newGamesModel);
+                            }
+                        } else {
+                            Toast.makeText(DetailActivity.this, "Error to add", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
     }
 }
