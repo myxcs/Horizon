@@ -7,14 +7,15 @@
     android:background="@drawable/backgroud"
     tools:context=".Activity.DetailActivity">
 
-<!--    <ScrollView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent" >-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:paddingBottom="300dp"
             tools:ignore="MissingConstraints">
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -225,7 +226,7 @@
 
 <!--        </LinearLayout>-->
 
-<!--    </ScrollView>-->
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

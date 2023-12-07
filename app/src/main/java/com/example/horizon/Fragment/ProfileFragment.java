@@ -203,7 +203,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                Intent intent = new Intent(getContext(), MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -247,21 +247,39 @@ public class ProfileFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
-                    auth.signOut();
-                    SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-                    editor.putBoolean("rememberMe", false);
-                    editor.apply();
-                    editor.commit();
                     Intent intent = new Intent(getContext(), LoginActivity.class);
-                    getActivity().finish();
-                    Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                 }
                 catch (Exception e)
                 {
                     Toast.makeText(getContext(), "Error to logout", Toast.LENGTH_SHORT).show();
                 }
+
+                auth.signOut();
+                FirebaseAuth.getInstance().signOut();
+                FirebaseFirestore.getInstance().clearPersistence();
+
+                    SharedPreferences preferences = getActivity().getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    try {
+                        editor.clear();
+                        editor.putString("remember", "false");
+                        editor.apply();
+                        editor.commit();
+                    }
+                    catch (Exception e)
+                    {
+                        Toast.makeText(getContext(), "Error to logout", Toast.LENGTH_SHORT).show();
+                    }
+
+
+
+                    Toast.makeText(getContext(), "Logout", Toast.LENGTH_SHORT).show();
+
                 //this shit is not working sometime and i dont know why
             }
         });
