@@ -1,57 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="7dp"
-    app:cardElevation="5dp"
-    >
-
+    app:cardCornerRadius="15dp">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="#2196F3"
-        android:padding="8dp">
+        >
+        <ImageView
+            android:layout_width="184dp"
+            android:layout_height="69dp"
+            android:id="@+id/game_pics"
+            android:layout_gravity="center"
+            android:scaleType="center"
+            android:background="@color/white"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="3">
-            <ImageView
-                android:id="@+id/game_pics"
-                android:src="@drawable/game_sample"
-                android:layout_width="133dp"
-                android:layout_height="50dp"/>
+        <TextView
+            android:id="@+id/game_name"
+            android:layout_width="184dp"
+            android:layout_height="wrap_content"
+            android:text="game name"
+            android:gravity="center_horizontal"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginStart="15dp"
-                android:gravity="center"
-                android:orientation="vertical">
-                <TextView
-                    android:id="@+id/game_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Game Name"
-                    android:textSize="20dp"
-                    android:textStyle="bold"
-                    android:layout_marginBottom="5dp"
-                    />
-<!--                <TextView-->
-<!--                    android:id="@+id/game_price"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="giá"-->
-<!--                    android:textSize="10dp"-->
-<!--                    android:textStyle="italic"-->
-<!--                    />-->
-            </LinearLayout>
-
-        </LinearLayout>
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
