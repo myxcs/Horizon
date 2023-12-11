@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -63,6 +64,8 @@ public class ProfileFragment extends Fragment {
     private TextView player_password;
     CircleImageView profileImg;
     private UserModel userModel;
+
+    LinearLayout container;
     Button update;
     private Button logout;
     private   FirebaseAuth auth;
@@ -124,6 +127,7 @@ public class ProfileFragment extends Fragment {
         player_password = view.findViewById(R.id.player_password);
         profileImg = view.findViewById(R.id.profile_img);
         logout = view.findViewById(R.id.logout_button);
+        container = view.findViewById(R.id.container);
 
 
         //make some change here, remember it
@@ -271,6 +275,14 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getContext(), ChangePass.class);
             //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+            }
+        });
+
+        //không hiểu sao bị lỗi nhấn xuyên qua fragment, thế là mình tạo một cái linearlayout bao quát nhấn vào sẽ không có response gì, lmao thật
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getContext(), "Stop touching me", Toast.LENGTH_SHORT).show();
             }
         });
 
