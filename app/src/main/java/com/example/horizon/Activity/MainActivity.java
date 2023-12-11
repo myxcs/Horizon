@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -58,12 +59,12 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView newGames;
     RecyclerView Games;
 
-    //EditText search_box;
-    //private RecyclerView recyclerViewSearch;
+    EditText search_box;
+    TextView textView, textView2, textView3;
+    private RecyclerView recyclerViewSearch;
 
     List<PopularModel> popularModelsList;
     List<NewGamesModel> newGamesModelsList;
-
     List<GamesModel> gamesModelsList;
 
 
@@ -137,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
+        textView = findViewById(R.id.textView);
+        textView2 = findViewById(R.id.textView2);
+        textView3 = findViewById(R.id.textView3);
+
         //popular games recycler
         popularGames = findViewById(R.id.view1);
         popularGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -161,65 +166,17 @@ public class MainActivity extends AppCompatActivity {
 
         //read firestore
         //should not like this bro, but these no faking data, forgive me
+
         //popular games
-        db.collection("PopularGames")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                PopularModel popularModel = document.toObject(PopularModel.class);
-                                popularModelsList.add(popularModel);
-                                popularAdapters.notifyDataSetChanged();
-                                loading1.setVisibility(View.GONE);
-                            }
-                        } else {
-                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        getPopularGamesData();
 
 
         //new games
-        db.collection("NewGames")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-
-                                NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
-                                newGamesModelsList.add(newGamesModel);
-                                newGamesAdapter.notifyDataSetChanged();
-                                loading2.setVisibility(View.GONE);
-                            }
-                        } else {
-                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+        getNewGamesData();
 
 
         //games
-        db.collection("games")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        GamesModel gamesModel = document.toObject(GamesModel.class);
-                        gamesModelsList.add(gamesModel);
-                        gamesAdapter.notifyDataSetChanged();
-                        loading3.setVisibility(View.GONE);
-                    }
-                } else {
-                    Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        getGamesData();
 
 
         //navigation, aka 3 cái nút dưới màn hình. đáng lí ra thì phải xử lí 3 cái fragment nhưng lại thành 1 activity 2 fragment =))
@@ -248,33 +205,112 @@ public class MainActivity extends AppCompatActivity {
         //sendRequest();
 
         //Search view not working =))
-//        recyclerViewSearch = findViewById(R.id.search_rec);
-//        search_box = findViewById(R.id.search_box);
+       // recyclerViewSearch = findViewById(R.id.search_rec);
+        search_box = findViewById(R.id.search_box);
+        //recyclerViewSearch.setLayoutManager(new LinearLayoutManager(this));
+        //recyclerViewSearch.setAdapter(adapterGames);
+        //recyclerViewSearch.setHasFixedSize(true);
+
+//        gamesModelsList = new ArrayList<>();
+//        gamesAdapter = new GamesAdapter(this, gamesModelsList);
+//
 //        newGamesModelsList = new ArrayList<>();
 //        newGamesAdapter = new NewGamesAdapter(this, newGamesModelsList);
-//        recyclerViewSearch.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerViewSearch.setAdapter(adapterNewGames);
-//        recyclerViewSearch.setHasFixedSize(true);
-//        search_box.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//                if (s.toString().isEmpty()) {
-//                    newGamesModelsList.clear();
-//                    newGamesAdapter.notifyDataSetChanged();
-//                } else {
-//                    searchProduct(s.toString());
-//                }
-//            }
-//        });
+
+        search_box.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().isEmpty()) {
+                    //lấy lại data khi type trống
+                    gamesModelsList.clear();
+                    textView.setText("Kho game hot");
+                    textView2.setVisibility(View.VISIBLE);
+                    textView3.setVisibility(View.VISIBLE);
+                    getGamesData();
+                    getNewGamesData();
+                    getPopularGamesData();
+                    gamesAdapter.notifyDataSetChanged();
+                } else {
+                    searchProduct(s.toString());
+                }
+            }
+        });
+
+
+    }
+
+
+    //quyết định vứt cái lấy data ở đây cho đỡ trông nhì nhằng
+    private void getNewGamesData() {
+        db.collection("NewGames")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
+                                newGamesModelsList.add(newGamesModel);
+                                newGamesAdapter.notifyDataSetChanged();
+                                loading2.setVisibility(View.GONE);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void getPopularGamesData() {
+        db.collection("PopularGames")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                PopularModel popularModel = document.toObject(PopularModel.class);
+                                popularModelsList.add(popularModel);
+                                popularAdapters.notifyDataSetChanged();
+                                loading1.setVisibility(View.GONE);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+    }
+
+    private void getGamesData() {
+        db.collection("games")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                GamesModel gamesModel = document.toObject(GamesModel.class);
+                                gamesModelsList.add(gamesModel);
+                                gamesAdapter.notifyDataSetChanged();
+                                loading3.setVisibility(View.GONE);
+                            }
+                        } else {
+                            Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 //  phần này sẽ lấy dữ liệu từ một link dạng json, nó thực sự không nên được dùng
 //    private void sendRequest() {
@@ -368,24 +404,87 @@ public class MainActivity extends AppCompatActivity {
 
 
 //phần tìm kiếm trong main, ko chạy và cũng lười fix
-//    private void searchProduct(String type) {
-//        if(!type.isEmpty()) {
-//           db.collection("NewGames").whereEqualTo("name", type)
-//                   .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                       @Override
-//                       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                           if (task.isSuccessful() && task.getResult() != null) {
-//                               newGamesModelsList.clear();
-//                               newGamesAdapter.notifyDataSetChanged();
-//                               for (DocumentSnapshot document : task.getResult().getDocuments()) {
-//                                   NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
-//                                   newGamesModelsList.add(newGamesModel);
-//                                   newGamesAdapter.notifyDataSetChanged();
-//                               }
-//
-//                           }
-//                       }
-//                   });
-//        }
-//    }
+    private void searchProduct(String type) {
+        if(!type.isEmpty()) {
+            //ẩn text
+            textView.setText("Kết quả tìm kiếm cho: " + type);
+            textView2.setVisibility(View.GONE);
+            textView3.setVisibility(View.GONE);
+
+            //tìm new games
+            findNewGames(type);
+
+            //tìm popular games
+            findPopularGames(type);
+
+            //tìm games
+            findGames(type);
+        }
+        else {
+            Toast.makeText(this, "Error", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    private void findGames(String type) {
+        db.collection("games").whereEqualTo("name", type)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            gamesModelsList.clear();
+                            gamesAdapter.notifyDataSetChanged();
+
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                GamesModel gamesModel = document.toObject(GamesModel.class);
+                                gamesModelsList.add(gamesModel);
+                                gamesAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    }
+                });
+
+    }
+
+    private void findPopularGames(String type) {
+        db.collection("PopularGames").whereEqualTo("name", type)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            popularModelsList.clear();
+                            popularAdapters.notifyDataSetChanged();
+
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                PopularModel popularModel = document.toObject(PopularModel.class);
+                                popularModelsList.add(popularModel);
+                                popularAdapters.notifyDataSetChanged();
+                            }
+
+                        }
+                    }
+                });
+    }
+
+    private void findNewGames(String type) {
+        db.collection("NewGames").whereEqualTo("name", type)
+                .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful() && task.getResult() != null) {
+                            newGamesModelsList.clear();
+                            newGamesAdapter.notifyDataSetChanged();
+
+                            for (DocumentSnapshot document : task.getResult().getDocuments()) {
+                                NewGamesModel newGamesModel = document.toObject(NewGamesModel.class);
+                                newGamesModelsList.add(newGamesModel);
+                                newGamesAdapter.notifyDataSetChanged();
+                            }
+
+                        }
+                    }
+                });
+    }
 }
+//truly i have to say my code is dumb and i have no idea how to make it work
