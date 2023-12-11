@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.horizon.Models.GamesModel;
 import com.example.horizon.Models.NewGamesModel;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.Models.UserModel;
@@ -52,6 +53,8 @@ public class DetailActivity extends AppCompatActivity {
      PopularModel popularModel =null;
      NewGamesModel newGamesModel = null;
 
+     GamesModel gamesModel = null;
+
      UserModel userModel=null;
 
 
@@ -84,6 +87,10 @@ public class DetailActivity extends AppCompatActivity {
         final Object object2 = getIntent().getSerializableExtra("object2");
         if (object2 instanceof NewGamesModel) {
             newGamesModel = (NewGamesModel) object2;
+        }
+        final Object object3 = getIntent().getSerializableExtra("object3");
+        if (object3 instanceof GamesModel) {
+            gamesModel = (GamesModel) object3;
         }
 
         // lấy số tiền hiện tại của người dùng
@@ -191,6 +198,24 @@ public class DetailActivity extends AppCompatActivity {
                         Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
                     }
                 }
+                else if (gamesModel!=null){
+                    if (moneyRaw>= gamesModel.getPrice()){
+                        moneyRaw = moneyRaw - gamesModel.getPrice();
+                        getGetMoneyDataReference.setValue(moneyRaw);
+                        addedToCart();
+                        Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
+                      //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                    else{
+                        Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
+                       // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                        Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
+                    }
+                }
                 else{
                     Toast.makeText(DetailActivity.this, "Error to buy", Toast.LENGTH_SHORT).show();
                 }
@@ -212,6 +237,13 @@ public class DetailActivity extends AppCompatActivity {
             detailDescription.setText(newGamesModel.getDescription());
             detailStorage.setText(newGamesModel.getStorage());
             detailPrice.setText(newGamesModel.getPrice() + "$");
+        }
+        else if (gamesModel != null) {
+            Glide.with(getApplicationContext()).load(gamesModel.getImg_url()).into(detailImg);
+            detailName.setText(gamesModel.getName());
+            detailDescription.setText(gamesModel.getDescription());
+            detailStorage.setText(gamesModel.getStorage());
+            detailPrice.setText(gamesModel.getPrice() + "$");
         }
         else {
             Toast.makeText(this, "Error to show game", Toast.LENGTH_SHORT).show();
@@ -287,11 +319,34 @@ public class DetailActivity extends AppCompatActivity {
                     });
             addNewGamesDownloadedData();
         }
+        else if(gamesModel!=null){
+
+            final HashMap<String, Object> cartMap = new HashMap<>();
+            cartMap.put("productName", gamesModel.getName());
+            cartMap.put("userMail", auth.getCurrentUser().getEmail());
+            cartMap.put("userMoney", money);
+            cartMap.put("productPrice", gamesModel.getPrice());
+            cartMap.put("Downloaded", gamesModel.getDownloaded()+1);
+            cartMap.put("currentDate", saveCurrentDate);
+            cartMap.put("currentTime", saveCurrentTime);
+
+            firestore.collection("addToCart").document(auth.getCurrentUser().getUid())
+                    .collection("CurrentUser").add(cartMap).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentReference> task) {
+                            Toast.makeText(DetailActivity.this, "Added to cart", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            addGamesDownloadedData();
+        }
         else {
             Toast.makeText(this, "Error popular or new is null", Toast.LENGTH_SHORT).show();
         }
         // phần downloaded bị sai nhưng vẫn chưa nghĩ ra cách sửa
     }
+
+
 
     //thêm dữ dữ liệu downloaded để thông kê cho phần popular games
     private void addPopularGamesDownloadedData() {
@@ -343,5 +398,29 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void addGamesDownloadedData() {
+
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference gameRef = db.collection("games");
+
+        gameRef.whereEqualTo("name", gamesModel.getName())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+
+                                GamesModel gamesModel = document.toObject(GamesModel.class);
+                                gamesModel.setDownloaded(gamesModel.getDownloaded() + 1);
+                                gameRef.document(document.getId()).set(gamesModel);
+                            }
+                        } else {
+                            Toast.makeText(DetailActivity.this, "Error to add", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 }

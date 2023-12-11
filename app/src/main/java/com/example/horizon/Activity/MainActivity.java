@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 //import com.example.horizon.Adapters.GamesListAdapter;
+import com.example.horizon.Adapters.GamesAdapter;
 import com.example.horizon.Adapters.NewGamesAdapter;
 import com.example.horizon.Adapters.PopularAdapters;
 import com.example.horizon.Adapters.SliderAdapters;
@@ -29,6 +30,7 @@ import com.example.horizon.Domian.SliderItems;
 import com.example.horizon.Fragment.HomeFragment;
 import com.example.horizon.Fragment.NotificationFragment;
 import com.example.horizon.Fragment.ProfileFragment;
+import com.example.horizon.Models.GamesModel;
 import com.example.horizon.Models.NewGamesModel;
 import com.example.horizon.Models.PopularModel;
 import com.example.horizon.R;
@@ -54,12 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
     RecyclerView popularGames;
     RecyclerView newGames;
+    RecyclerView Games;
 
     //EditText search_box;
     //private RecyclerView recyclerViewSearch;
 
     List<PopularModel> popularModelsList;
     List<NewGamesModel> newGamesModelsList;
+
+    List<GamesModel> gamesModelsList;
 
 
     FirebaseAuth auth;
@@ -75,10 +80,15 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapterPopularGames;
 
     private RecyclerView.Adapter adapterNewGames;
+
+    private RecyclerView.Adapter adapterGames;
+
     private RecyclerView recyclerViewPopularGames;
     private RecyclerView recyclerViewNewGames;
+    private RecyclerView recyclerViewGames;
     private PopularAdapters popularAdapters;
     private NewGamesAdapter newGamesAdapter;
+    private GamesAdapter gamesAdapter;
 
     //private RecyclerView.Adapter adapterBestGames, AdapterUpcomingGames, adapterCategory;
     //private RecyclerView recyclerViewBestGames, recyclerViewUpcomingGames, recyclerViewCategory;
@@ -136,10 +146,17 @@ public class MainActivity extends AppCompatActivity {
 
         //new games recycler
         newGames = findViewById(R.id.view2);
-        newGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        newGames.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         newGamesModelsList = new ArrayList<>();
         newGamesAdapter = new NewGamesAdapter(this, newGamesModelsList);
         newGames.setAdapter(newGamesAdapter);
+
+        //games recycler
+        Games = findViewById(R.id.view3);
+        Games.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        gamesModelsList = new ArrayList<>();
+        gamesAdapter = new GamesAdapter(this, gamesModelsList);
+        Games.setAdapter(gamesAdapter);
 
 
         //read firestore
@@ -183,6 +200,26 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+
+        //games
+        db.collection("games")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        GamesModel gamesModel = document.toObject(GamesModel.class);
+                        gamesModelsList.add(gamesModel);
+                        gamesAdapter.notifyDataSetChanged();
+                        loading3.setVisibility(View.GONE);
+                    }
+                } else {
+                    Toast.makeText(MainActivity.this, "Error " + task.getException(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
 
         //navigation, aka 3 cái nút dưới màn hình. đáng lí ra thì phải xử lí 3 cái fragment nhưng lại thành 1 activity 2 fragment =))
@@ -318,6 +355,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager2 = findViewById(R.id.viewpages);
         loading1 = findViewById(R.id.progressBar1);
         loading2 = findViewById(R.id.progressBar2);
+        loading3 = findViewById(R.id.progressBar3);
     }
 
 //        recyclerViewBestGames = findViewById(R.id.view1);
