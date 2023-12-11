@@ -8,6 +8,7 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -36,6 +37,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -81,10 +87,42 @@ public class MainActivity extends AppCompatActivity {
     private StringRequest mStringRequest, mStringRequest2, mStringRequest3;
     private ProgressBar loading1, loading2, loading3;
 
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference getBanStatusReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        try {
+            getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
+        }
+
+        getBanStatusReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Toast.makeText(MainActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    boolean banStatus = snapshot.getValue(boolean.class);
+                    if (banStatus) {
+                        Toast.makeText(MainActivity.this, "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(MainActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();

@@ -58,13 +58,23 @@ public class DetailActivity extends AppCompatActivity {
 
      FirebaseFirestore firestore;
      FirebaseDatabase database = FirebaseDatabase.getInstance();
-     DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+     DatabaseReference getGetMoneyDataReference;
+     DatabaseReference getBanStatusReference;
      FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+
+        try {
+            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+            getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
+        }
+
 
          // tạo một oject lưu v truyền dữ liệu
         final Object object = getIntent().getSerializableExtra("object");
@@ -98,6 +108,31 @@ public class DetailActivity extends AppCompatActivity {
            }
        });
 
+        //ban status
+        getBanStatusReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    boolean banStatus = snapshot.getValue(boolean.class);
+                    if (banStatus) {
+                        Toast.makeText(DetailActivity.this, "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DetailActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         //activity to activity
         detailImg = findViewById(R.id.game_pics);
@@ -114,6 +149,7 @@ public class DetailActivity extends AppCompatActivity {
 
         //xử lí phím mua
         addToCart.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
 
@@ -125,13 +161,13 @@ public class DetailActivity extends AppCompatActivity {
                         getGetMoneyDataReference.setValue(moneyRaw);
                         addedToCart();
                         Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                      //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(intent);
                     }
                     else{
                         Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(intent);
                         Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();
@@ -143,13 +179,13 @@ public class DetailActivity extends AppCompatActivity {
                          getGetMoneyDataReference.setValue(moneyRaw);
                         addedToCart();
                         Intent intent = new Intent(DetailActivity.this, BuySuccess.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                      //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(intent);
                     }
                     else{
                         Intent intent = new Intent(DetailActivity.this, BuyConfirm.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                       // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         finish();
                         startActivity(intent);
                         Toast.makeText(DetailActivity.this, "Bạn không đủ tiền", Toast.LENGTH_SHORT).show();

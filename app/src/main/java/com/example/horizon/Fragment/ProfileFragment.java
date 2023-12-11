@@ -76,6 +76,7 @@ public class ProfileFragment extends Fragment {
     DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
     DatabaseReference getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
     DatabaseReference getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
+    DatabaseReference getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
 
 
     @Override
@@ -84,6 +85,36 @@ public class ProfileFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+        //have no idea how it work
+        try {
+            getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+        }
+        catch (Exception e) {
+            Toast.makeText(getContext(), "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
+        }
+        getBanStatusReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Toast.makeText(getContext(), "Error to get ban status", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    boolean banStatus = snapshot.getValue(boolean.class);
+                    if (banStatus) {
+                        Toast.makeText(getContext(), "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getContext(), LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                        startActivity(intent);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Error to get ban status", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         back_button = view.findViewById(R.id.back_button);
@@ -212,7 +243,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
               //  Toast.makeText(getContext(), "money" + money, Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getContext(), Recharge.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+             //   intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -221,7 +252,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChangeProfile.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -230,7 +261,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChangeMail.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+               // intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });
@@ -238,7 +269,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), ChangePass.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            //    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
         });

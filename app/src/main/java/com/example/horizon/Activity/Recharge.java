@@ -52,7 +52,8 @@ public class Recharge extends AppCompatActivity {
     PopularModel popularModel =null;
     UserModel userModel;
 
-    DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+    DatabaseReference getGetMoneyDataReference;
+    DatabaseReference getBanStatusReference;
 
 
   //  public TextView player_money;
@@ -60,6 +61,37 @@ public class Recharge extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recharge);
+
+        try {
+            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+            getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+        }
+        catch (Exception e) {
+            Toast.makeText(this, "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
+        }
+        getBanStatusReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Toast.makeText(Recharge.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    boolean banStatus = snapshot.getValue(boolean.class);
+                    if (banStatus) {
+                        Toast.makeText(Recharge.this, "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Recharge.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(Recharge.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         back_button = findViewById(R.id.back_button);
         recharge = findViewById(R.id.button_recharge);
