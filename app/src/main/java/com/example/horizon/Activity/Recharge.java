@@ -188,11 +188,5 @@ public class Recharge extends AppCompatActivity {
                         Toast.makeText(Recharge.this, "Đã gửi yêu cầu nạp", Toast.LENGTH_SHORT).show();
                     }
                 });
-        firestore.collection("Recharge").add(rechargeMap).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Recharge.this, "Error to recharge", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }
