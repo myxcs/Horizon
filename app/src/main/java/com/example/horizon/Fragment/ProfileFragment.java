@@ -11,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -66,6 +67,7 @@ public class ProfileFragment extends Fragment {
     private UserModel userModel;
 
     //LinearLayout container;
+    ConstraintLayout constraintLayout;
 
   //  private Button logout;
     private   FirebaseAuth auth;
@@ -132,6 +134,7 @@ public class ProfileFragment extends Fragment {
         player_password = view.findViewById(R.id.player_password);
         profileImg = view.findViewById(R.id.profile_img);
         logout_button = view.findViewById(R.id.logout_button);
+        constraintLayout = view.findViewById(R.id.profile_container);
        // container = view.findViewById(R.id.container);
 
 
@@ -201,7 +204,7 @@ public class ProfileFragment extends Fragment {
                 Long value = dataSnapshot.getValue(Long.class);
                 int moneyRaw = value.intValue();
                  money = String.valueOf(moneyRaw);
-                player_money.setText("Số dư: " + money + "$");
+                player_money.setText(money + "$");
                 //player_money.setHint();
                     }
             }
@@ -237,7 +240,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String text = dataSnapshot.getValue(String.class);
-                player_email.setText("Email: " + text);
+                player_email.setText(text);
                 //player_money.setHint();
             }
             @Override
@@ -297,6 +300,13 @@ public class ProfileFragment extends Fragment {
 //
 //            }
 //        });
+
+        constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //nothing here
+            }
+        });
 
         //nút logout này có lỗi nhưng ko biết fix =))
 

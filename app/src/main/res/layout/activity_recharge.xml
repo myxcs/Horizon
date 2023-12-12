@@ -70,6 +70,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
             android:id="@+id/recharge"
             android:inputType="numberDecimal"
             android:hint="Nhập số tiền tại đây!"/>
