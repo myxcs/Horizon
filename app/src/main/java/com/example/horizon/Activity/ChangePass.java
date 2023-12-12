@@ -56,7 +56,6 @@ public class ChangePass extends AppCompatActivity {
         setContentView(R.layout.activity_change_pass);
 
         try {
-            getPassDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/password");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {
@@ -85,6 +84,7 @@ public class ChangePass extends AppCompatActivity {
             }
         });
 
+        getPassDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/password");
 
         back_button = findViewById(R.id.back_button);
         button_change_pass = findViewById(R.id.button_change_pass);

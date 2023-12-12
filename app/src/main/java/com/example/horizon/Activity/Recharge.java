@@ -63,7 +63,6 @@ public class Recharge extends AppCompatActivity {
         setContentView(R.layout.activity_recharge);
 
         try {
-            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {
@@ -91,6 +90,8 @@ public class Recharge extends AppCompatActivity {
                 Toast.makeText(Recharge.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
             }
         });
+
+        getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
 
 
         back_button = findViewById(R.id.back_button);

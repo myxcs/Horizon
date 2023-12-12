@@ -71,12 +71,38 @@ public class DetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detail);
 
         try {
-            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {
             Toast.makeText(this, "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
         }
+
+        //ban status
+        getBanStatusReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.getValue() == null) {
+                    Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    boolean banStatus = snapshot.getValue(boolean.class);
+                    if (banStatus) {
+                        Toast.makeText(DetailActivity.this, "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(DetailActivity.this, LoginActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        finish();
+                        startActivity(intent);
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
 
 
          // tạo một oject lưu v truyền dữ liệu
@@ -114,30 +140,6 @@ public class DetailActivity extends AppCompatActivity {
                Toast.makeText(DetailActivity.this, "Error to get money " + money, Toast.LENGTH_SHORT).show();
            }
        });
-
-        //ban status
-        getBanStatusReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.getValue() == null) {
-                    Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
-                    boolean banStatus = snapshot.getValue(boolean.class);
-                    if (banStatus) {
-                        Toast.makeText(DetailActivity.this, "Bạn đã bị cấm", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(DetailActivity.this, LoginActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        finish();
-                        startActivity(intent);
-                    }
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(DetailActivity.this, "Error to get ban status", Toast.LENGTH_SHORT).show();
-            }
-        });
 
 
 

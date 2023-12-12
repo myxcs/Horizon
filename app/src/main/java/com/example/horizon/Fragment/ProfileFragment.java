@@ -66,12 +66,12 @@ public class ProfileFragment extends Fragment {
     private UserModel userModel;
 
     LinearLayout container;
-    Button update;
+
     private Button logout;
     private   FirebaseAuth auth;
     private FirebaseFirestore db;
 
-    FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+  //  FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
     FirebaseStorage storage;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
@@ -92,10 +92,6 @@ public class ProfileFragment extends Fragment {
         //have no idea how it work
         try {
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
-            getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
-            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
-            getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
-            getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
         }
         catch (Exception e) {
             Toast.makeText(getContext(), "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
@@ -122,6 +118,11 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(), "Error to get ban status", Toast.LENGTH_SHORT).show();
             }
         });
+
+        getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
+        getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+        getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
+        getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
 
 
         back_button = view.findViewById(R.id.back_button);
@@ -216,7 +217,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String text = dataSnapshot.getValue(String.class);
-                Glide.with(getContext()).load(text).into(profileImg);
+                try{
+                    Glide.with(getContext()).load(text).into(profileImg);
+                }
+                catch (Exception e){
+
+                    Toast.makeText(getContext(), "Error to show profile image", Toast.LENGTH_SHORT).show();
+                }
+
                 //player_money.setHint();
             }
             @Override

@@ -40,7 +40,6 @@ public class BuyConfirm extends AppCompatActivity {
 
 //tránh chết chương trình khi bị ban đột ngột
         try {
-            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
               //thực sự đã cố để khi bị ban thì sễ out ra màn login nhưng chế mãi không ra =))
 //            if (getGetMoneyDataReference == null) {
@@ -88,7 +87,7 @@ public class BuyConfirm extends AppCompatActivity {
 
 
 
-
+        getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
 
 
         buyConfirm = findViewById(R.id.buy_button);

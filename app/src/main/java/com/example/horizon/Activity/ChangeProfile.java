@@ -43,7 +43,6 @@ public class ChangeProfile extends AppCompatActivity {
         setContentView(R.layout.activity_change_profile);
 
         try {
-            getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {
@@ -72,6 +71,7 @@ public class ChangeProfile extends AppCompatActivity {
             }
         });
 
+        getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
 
         back_button = findViewById(R.id.back_button);
         button_change_name = findViewById(R.id.button_change_name);

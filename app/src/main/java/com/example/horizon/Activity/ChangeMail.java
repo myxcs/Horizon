@@ -53,7 +53,6 @@ public class ChangeMail extends AppCompatActivity {
         setContentView(R.layout.activity_change_mail);
 
         try {
-            getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {
@@ -84,6 +83,7 @@ public class ChangeMail extends AppCompatActivity {
 
 
 
+        getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
 
 
         back_button = findViewById(R.id.back_button);
