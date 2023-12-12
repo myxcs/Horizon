@@ -55,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
 
-  //  private ImageView back_button;
+    private ImageView logout_button;
 
     private String money;
     private TextView player_money;
@@ -65,9 +65,9 @@ public class ProfileFragment extends Fragment {
     CircleImageView profileImg;
     private UserModel userModel;
 
-    LinearLayout container;
+    //LinearLayout container;
 
-    private Button logout;
+  //  private Button logout;
     private   FirebaseAuth auth;
     private FirebaseFirestore db;
 
@@ -125,13 +125,13 @@ public class ProfileFragment extends Fragment {
         getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
 
 
-        back_button = view.findViewById(R.id.back_button);
+        //back_button = view.findViewById(R.id.back_button);
         player_money = view.findViewById(R.id.player_money);
         player_name = view.findViewById(R.id.player_name);
         player_email = view.findViewById(R.id.player_email);
         player_password = view.findViewById(R.id.player_password);
         profileImg = view.findViewById(R.id.profile_img);
-        logout = view.findViewById(R.id.logout_button);
+        logout_button = view.findViewById(R.id.logout_button);
        // container = view.findViewById(R.id.container);
 
 
@@ -246,14 +246,14 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               Intent intent = new Intent(getContext(), MainActivity.class);
-                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+//        back_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               Intent intent = new Intent(getContext(), MainActivity.class);
+//                //intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
         player_money.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,7 +299,8 @@ public class ProfileFragment extends Fragment {
 //        });
 
         //nút logout này có lỗi nhưng ko biết fix =))
-        logout.setOnClickListener(new View.OnClickListener() {
+
+        logout_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -338,6 +339,8 @@ public class ProfileFragment extends Fragment {
                 //this shit is not working sometime and i dont know why
             }
         });
+
+
 
         //tính ra là định cho nút update nằm ở profile luôn
 //        update.setOnClickListener(new View.OnClickListener() {

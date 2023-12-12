@@ -50,7 +50,7 @@ public class NotificationFragment extends Fragment {
 
     private MyCartAdapter cartAdapter;
 
-    private ImageView back_button;
+   // private ImageView back_button;
 
     public void MyCartsFragment() {
       //idk
@@ -98,15 +98,15 @@ public class NotificationFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         auth = FirebaseAuth.getInstance();
 
-        back_button  = view.findViewById(R.id.back_button);
-        back_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), MainActivity.class);
-              //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-        });
+//        back_button  = view.findViewById(R.id.back_button);
+//        back_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(getContext(), MainActivity.class);
+//              //  intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                startActivity(intent);
+//            }
+//        });
 
 
 

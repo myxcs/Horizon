@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,51 +9,69 @@
     tools:context=".Fragment.ProfileFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_img"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginEnd="50dp"
-        android:src="@drawable/ava"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/constraintLayout"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/circle_background_white"
+        app:layout_constraintBottom_toBottomOf="@+id/titleName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.126" />
+        app:layout_constraintStart_toEndOf="@+id/titleName"
+        app:layout_constraintTop_toTopOf="@+id/titleName">
 
-    <TextView
-        android:id="@+id/titleName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tài khoản"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/profile_img"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <ImageView
+            android:id="@+id/logout_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/log_out" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/player_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="username"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profile_img" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_img"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:src="@drawable/ava"
+            app:civ_border_color="#FF000000"
+            app:civ_border_width="2dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/titleName"
+            app:layout_constraintVertical_bias="0.126" />
+
+        <TextView
+            android:id="@+id/titleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Tài khoản"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="username"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/profile_img" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -98,7 +116,7 @@
                 android:layout_weight="1"
                 android:text="name"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/grey"
+                android:textColor="#4CAF50"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -133,7 +151,7 @@
                 android:layout_weight="1"
                 android:text="email"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/grey"
+                android:textColor="#4CAF50"
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -170,24 +188,25 @@
                 android:layout_weight="1"
                 android:text="Đổi mật khẩu"
                 android:textAlignment="viewEnd"
-                android:textColor="@color/grey"
+                android:textColor="#4CAF50"
                 android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
-        <Button
-            android:id="@+id/logout_button"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="Đăng xuất"
-            android:textSize="18sp"
-            app:cornerRadius="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/linearLayout"
-            app:layout_constraintStart_toStartOf="@id/linearLayout"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout"
-            app:layout_constraintVertical_bias="1.0" />
+<!--        <Button-->
+<!--            android:id="@+id/logout_button"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:gravity="center"-->
+<!--            android:text="Đăng xuất"-->
+<!--            android:textSize="18sp"-->
+<!--            app:cornerRadius="20dp"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/linearLayout"-->
+<!--            app:layout_constraintStart_toStartOf="@id/linearLayout"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/linearLayout"-->
+<!--            app:layout_constraintVertical_bias="1.0" />-->
 
 <!--old version-->
 <!--        <LinearLayout-->
@@ -319,5 +338,5 @@
 <!--        </LinearLayout>-->
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
