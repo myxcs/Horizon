@@ -55,7 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileFragment extends Fragment {
 
 
-    private ImageView back_button;
+  //  private ImageView back_button;
 
     private String money;
     private TextView player_money;
@@ -132,7 +132,7 @@ public class ProfileFragment extends Fragment {
         player_password = view.findViewById(R.id.player_password);
         profileImg = view.findViewById(R.id.profile_img);
         logout = view.findViewById(R.id.logout_button);
-        container = view.findViewById(R.id.container);
+       // container = view.findViewById(R.id.container);
 
 
         //make some change here, remember it
@@ -291,12 +291,12 @@ public class ProfileFragment extends Fragment {
         });
 
         //không hiểu sao bị lỗi nhấn xuyên qua fragment, thế là mình tạo một cái linearlayout bao quát nhấn vào sẽ không có response gì, lmao thật
-        container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
+//        container.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         //nút logout này có lỗi nhưng ko biết fix =))
         logout.setOnClickListener(new View.OnClickListener() {
