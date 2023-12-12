@@ -108,7 +108,7 @@ public class Recharge extends AppCompatActivity {
                 Fragment profileFragment = new ProfileFragment();
                 FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                 fragmentTransaction.replace(R.id.frame_layout, profileFragment).commit();
-                //finish();
+                finish();
             }
         });
 

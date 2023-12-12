@@ -31,10 +31,11 @@ public class ChangeProfile extends AppCompatActivity {
     private Button button_change_name;
     private EditText change_name;
     private FirebaseAuth auth;
-    private FirebaseDatabase database;
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference reference;
     UserModel userModel;
 
+    DatabaseReference getNameDataReference;
     DatabaseReference getBanStatusReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +43,7 @@ public class ChangeProfile extends AppCompatActivity {
         setContentView(R.layout.activity_change_profile);
 
         try {
-            reference = FirebaseDatabase.getInstance().getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+            getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
         }
         catch (Exception e) {

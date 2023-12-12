@@ -75,11 +75,11 @@ public class ProfileFragment extends Fragment {
     FirebaseStorage storage;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
-    DatabaseReference getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
-    DatabaseReference getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
-    DatabaseReference getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
-    DatabaseReference getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
-    DatabaseReference getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+    DatabaseReference getNameDataReference;
+    DatabaseReference getGetMoneyDataReference;
+    DatabaseReference getProfileImgDataReference;
+    DatabaseReference getEmailDataReference;
+    DatabaseReference getBanStatusReference;
 
 
     @Override
@@ -92,6 +92,10 @@ public class ProfileFragment extends Fragment {
         //have no idea how it work
         try {
             getBanStatusReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/banStatus");
+            getNameDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/name");
+            getGetMoneyDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/money");
+            getProfileImgDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/profileImg");
+            getEmailDataReference = database.getReference("Users/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "/email");
         }
         catch (Exception e) {
             Toast.makeText(getContext(), "Tài khoản đã bị khóa", Toast.LENGTH_SHORT).show();
@@ -282,7 +286,7 @@ public class ProfileFragment extends Fragment {
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(), "Stop touching me", Toast.LENGTH_SHORT).show();
+
             }
         });
 
